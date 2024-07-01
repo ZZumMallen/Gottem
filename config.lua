@@ -64,7 +64,9 @@ local AppTitle = CreateTitle("ZUI")
 local sBtn = CreateButton("CENTER", f, "TOP", -70, "Group Info")
 sBtn:SetScript("OnMouseDown", function() GroupInfo() end)
 
--- local rBtn = CreateButton("TOP", sBtn, "BOTTOM", -10, "nuffin")
+local rBtn = CreateButton("TOP", sBtn, "BOTTOM", -10, "I see Jake")
+rBtn:SetScript("OnMouseDown", function() JakeFinder() end)
+
 -- local gBtn = CreateButton("TOP", rBtn, "BOTTOM", -10, "Group Ino")
 
 local u = {
@@ -83,6 +85,15 @@ function GroupInfo()
     end
 end
 
+local EventFrame = CreateFrame("frame", "EventFrame")
+EventFrame:RegisterEvent("UNIT_TARGET")
+
+EventFrame:SetScript("OnEvent", function(self,event, ...)
+    local jTarget = GetUnitName("Target")
+    if (event == "UNIT_TARGET" and jTarget == "Gusthebus") then
+            print(jTarget.." spotted: "..GetZoneText().." - "..GetMinimapZoneText())
+    end
+end)
 
 
 

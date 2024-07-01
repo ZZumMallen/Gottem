@@ -86,9 +86,6 @@ function GroupInfo()
 end
 
 
-
-
-
 Jake_list = {"Palmface", "Gusthebus", "stinky"}
 
 function Is_name_in_list(picked_name)

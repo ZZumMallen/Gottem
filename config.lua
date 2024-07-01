@@ -85,12 +85,29 @@ function GroupInfo()
     end
 end
 
+
+
+
+
+Jake_list = {"Palmface", "Gusthebus", "stinky"}
+
+function Is_name_in_list(picked_name)
+    for _, name in ipairs(Jake_list) do
+        if name == picked_name then
+            return true
+        end
+    end
+    return false
+end
+
+
 local EventFrame = CreateFrame("frame", "EventFrame")
 EventFrame:RegisterEvent("UNIT_TARGET")
 
 EventFrame:SetScript("OnEvent", function(self,event, ...)
     local jTarget = GetUnitName("Target")
-    if (event == "UNIT_TARGET" and jTarget == "Gusthebus") then
+
+    if (event == "UNIT_TARGET" and Is_name_in_list("Gusthebus")) then
             print(jTarget.." spotted: "..GetZoneText().." - "..GetMinimapZoneText())
     end
 end)

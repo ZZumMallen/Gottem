@@ -1,0 +1,15 @@
+{
+    "Lua.diagnostics.globals": [
+        "SlashCmdList",
+        "ReloadUI",
+        "NUM_CHAT_WINDOWS",
+        "FrameStackTooltip_Toggle",
+        "ChatFrame1",
+        "message",
+        "setprinthandler",
+        "UPDATE",
+        "ADD",
+        "class",
+        "UISpecialFrames"
+    ]
+}

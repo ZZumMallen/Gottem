@@ -1,0 +1,9 @@
+## Interface: 100207
+## Title: ZUI_Test
+## Author: FancyPantsy
+## Version: 1.0
+## DefaultState: enabled
+## SavedVariables: Jumped
+## SavedVariablesPerCharacter: LastJumped
+
+config.lua

@@ -3,8 +3,8 @@
 ## Author: FancyPantsy
 ## Version: 1.0
 ## DefaultState: enabled
-## SavedVariables: Jumped
-## SavedVariablesPerCharacter: LastJumped
+## SavedVariables: ZUISavedData
+
 
 config.lua
 zui_chat.lua

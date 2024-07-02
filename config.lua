@@ -90,6 +90,7 @@ end
 
 
 Jake_list = {
+    "Whomptilizer",
     "Gusthebus",
     "chungtesta",
     "Palmface",    
@@ -118,13 +119,23 @@ C_ChatInfo.RegisterAddonMessagePrefix("ZUI-CHAT")
 local EventFrame = CreateFrame("frame", "EventFrame")
 EventFrame:RegisterEvent("UNIT_TARGET")
 
+local lastSent = 0
+local cooldown = 10
+
 EventFrame:SetScript("OnEvent", function(self,event, ...)
+    local currentTime = time()
+    if currentTime - lastSent < cooldown then
+        return
+    end
+
     local jTarget = GetUnitName("Target")
 
-    if (event == "UNIT_TARGET") then
-        C_ChatInfo.SendAddonMessage("ZUI-CHAT", "Spotted: " .. "(" .. jTarget .. ") - ", "GUILD")
-        C_ChatInfo.SendAddonMessage("ZUI-CHAT", "When: " .. (date()), "GUILD")
-        C_ChatInfo.SendAddonMessage("ZUI-CHAT", "Where: " .. GetZoneText() .. " - " .. GetMinimapZoneText(), "GUILD")            
+    if event == "UNIT_TARGET" and Is_name_in_list(jTarget) then
+        local class = strsplit(" ", UnitClass("Target"), 1)
+        local message = "Character: ".. jTarget .." ("..class..")\n" ..
+                        "When: " .. date() .. "\n" ..
+                        "Where: " .. GetZoneText() .. " - " .. GetMinimapZoneText()
+        C_ChatInfo.SendAddonMessage("ZUI-CHAT", message, "GUILD")
+        lastSent = currentTime   
     end
 end)
-

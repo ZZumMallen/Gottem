@@ -64,10 +64,24 @@ local AppTitle = CreateTitle("ZUI")
 local sBtn = CreateButton("CENTER", f, "TOP", -70, "Group Info")
 sBtn:SetScript("OnMouseDown", function() GroupInfo() end)
 
-local rBtn = CreateButton("TOP", sBtn, "BOTTOM", -10, "I see Jake")
-rBtn:SetScript("OnMouseDown", function() JakeFinder() end)
+
+
+-- local rBtn = CreateButton("TOP", sBtn, "BOTTOM", -10, "I see Jake")
+
 
 -- local gBtn = CreateButton("TOP", rBtn, "BOTTOM", -10, "Group Ino")
+
+-- 
+
+-- local f = CreateFrame("Frame")
+-- f:RegisterEvent("CHAT_MSG_ADDON")
+-- f:SetScript("OnEvent", OnEvent)
+
+-- function OnEvent(self, event, ...)
+--     if event == "CHAT_MESSAGE_ADDON" then
+--         message(event, ...)
+--     end
+-- end
 
 local u = {
     "Player",
@@ -76,6 +90,7 @@ local u = {
     "Party3",
     "Party4",
 }
+
 
 function GroupInfo()
     for key, v in pairs(u) do    
@@ -86,7 +101,20 @@ function GroupInfo()
 end
 
 
-Jake_list = {"Palmface", "Gusthebus", "stinky"}
+Jake_list = {
+    "Gusthebus",
+    "chungtesta",
+    "Palmface",    
+    "Sedition",
+    "Jakeofcats",
+    "lucilletwo",
+    "cryinggame",
+    "madys",
+    "manimal",
+    "Jacobcats",
+    "Brownnote"
+}
+
 
 function Is_name_in_list(picked_name)
     for _, name in ipairs(Jake_list) do
@@ -97,6 +125,7 @@ function Is_name_in_list(picked_name)
     return false
 end
 
+C_ChatInfo.RegisterAddonMessagePrefix("ZUI-CHAT")
 
 local EventFrame = CreateFrame("frame", "EventFrame")
 EventFrame:RegisterEvent("UNIT_TARGET")
@@ -104,11 +133,10 @@ EventFrame:RegisterEvent("UNIT_TARGET")
 EventFrame:SetScript("OnEvent", function(self,event, ...)
     local jTarget = GetUnitName("Target")
 
-    if (event == "UNIT_TARGET" and Is_name_in_list("Gusthebus")) then
-            print(jTarget.." spotted: "..GetZoneText().." - "..GetMinimapZoneText())
+    if (event == "UNIT_TARGET") then
+        C_ChatInfo.SendAddonMessage("ZUI-CHAT", "Spotted: " .. "(" .. jTarget .. ") - ", "GUILD")
+        C_ChatInfo.SendAddonMessage("ZUI-CHAT", "When: " .. (date()), "GUILD")
+        C_ChatInfo.SendAddonMessage("ZUI-CHAT", "Where: " .. GetZoneText() .. " - " .. GetMinimapZoneText(), "GUILD")            
     end
 end)
-
-
-
 

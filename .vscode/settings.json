@@ -10,6 +10,7 @@
         "UPDATE",
         "ADD",
         "class",
-        "UISpecialFrames"
+        "UISpecialFrames",
+        "ChatFrame_AddChannel"
     ]
 }

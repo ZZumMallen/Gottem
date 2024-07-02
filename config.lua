@@ -65,24 +65,12 @@ local sBtn = CreateButton("CENTER", f, "TOP", -70, "Group Info")
 sBtn:SetScript("OnMouseDown", function() GroupInfo() end)
 
 
-
 -- local rBtn = CreateButton("TOP", sBtn, "BOTTOM", -10, "I see Jake")
-
 
 -- local gBtn = CreateButton("TOP", rBtn, "BOTTOM", -10, "Group Ino")
 
--- 
 
--- local f = CreateFrame("Frame")
--- f:RegisterEvent("CHAT_MSG_ADDON")
--- f:SetScript("OnEvent", OnEvent)
-
--- function OnEvent(self, event, ...)
---     if event == "CHAT_MESSAGE_ADDON" then
---         message(event, ...)
---     end
--- end
-
+-- party list
 local u = {
     "Player",
     "Party1",
@@ -91,7 +79,7 @@ local u = {
     "Party4",
 }
 
-
+-- party info loop
 function GroupInfo()
     for key, v in pairs(u) do    
         local n = GetUnitName(v)

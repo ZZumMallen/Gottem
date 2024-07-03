@@ -31,6 +31,8 @@ chat.message:SetWidth(chat:GetWidth() - 20) --new
 chat.message:SetJustifyH("LEFT") --new
 chat.message:SetJustifyV("TOP") --new
 
+
+
 local function OnEvent(self, event, arg1, arg2, ...)
     if event == "CHAT_MSG_ADDON" and arg1 == "ZUI-CHAT" then
         --print(arg2)
@@ -56,3 +58,6 @@ local f = CreateFrame("Frame")
 f:RegisterEvent("CHAT_MSG_ADDON")
 f:SetScript("OnEvent", OnEvent)
 
+local d = CreateFrame("Frame")
+d:RegisterEvent("PLAYER_REGEN_ENABLED")
+d:RegisterEvent("PLAYER_REGEN_DISABLED")

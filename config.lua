@@ -91,6 +91,7 @@ end
 
 Jake_list = {
     "Whomptilizer",
+    "Amelioration",
     "Gusthebus",
     "chungtesta",
     "Palmface",    

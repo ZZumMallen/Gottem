@@ -1,7 +1,5 @@
 >[!WARNING]
-># Please fix asap
->- laoding in combat
->- Disable in a an instance (if possible)
+># Please fix
 >- window position reset after reload
 
 # What is this?

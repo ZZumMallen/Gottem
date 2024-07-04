@@ -34,7 +34,8 @@ chat.message:SetJustifyV("TOP") --new
 
 
 local function OnEvent(self, event, arg1, arg2, ...)
-    if event == "CHAT_MSG_ADDON" and arg1 == "ZUI-CHAT" then
+    if event == "CHAT_MSG_ADDON" and arg1 == "ZUI-CHAT" and 
+    Check_all_the_things() == 1 then
         --print(arg2)
         -- --attempting to make multiple lines
         -- local currentText = chat.message:GetText() or ""
@@ -46,7 +47,7 @@ local function OnEvent(self, event, arg1, arg2, ...)
     end
 end
 
-function HideFrame()
+local function HideFrame()
     if chat:IsShown() then
         chat:Hide()
     end
@@ -61,3 +62,12 @@ f:SetScript("OnEvent", OnEvent)
 local d = CreateFrame("Frame")
 d:RegisterEvent("PLAYER_REGEN_ENABLED")
 d:RegisterEvent("PLAYER_REGEN_DISABLED")
+
+function Check_all_the_things()
+    local _, _, difficultyID = GetInstanceInfo()
+    if difficultyID == 0 and UnitAffectingCombat("Player") == false then
+        return 1
+    end
+
+end
+

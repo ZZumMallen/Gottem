@@ -1,5 +1,5 @@
 ## Interface: 100207
-## Title: ZUI_Test
+## Title: ZUI
 ## Author: FancyPantsy
 ## Version: 1.0
 ## DefaultState: enabled

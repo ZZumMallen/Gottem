@@ -1,3 +1,8 @@
+local AddonName, ZUI = ...
+_G["ZUI"] = ZUI
+ZUI.L = {}
+
+
 ---@diagnostic disable: undefined-field
 
 SLASH_RELOADUI1 = "/rl" -- quicker reloads
@@ -81,14 +86,32 @@ local u = {
 
 -- party info loop
 function GroupInfo()
-    for key, v in pairs(u) do    
+    for _, v in pairs(u) do
+        local ilvl = ("%.2f"):format(GetAverageItemLevel(v))
         local n = GetUnitName(v)
         local c = UnitClass(v)
-        print(key .. ",  " .. v .. ",  " .. n .. ",  " .. c)
+        print(n .. "," .. c..","..ilvl)
     end
 end
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- split this into zui_chat
+------------------------------------------------------
 Jake_list = {
     "Whomptilizer",
     "Amelioration",

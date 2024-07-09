@@ -8,4 +8,4 @@
 
 # Todo
 - [x] make main window movable
-- [ ]save main window position
+- [ ] save main window position

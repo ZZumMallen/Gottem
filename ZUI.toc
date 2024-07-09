@@ -6,5 +6,5 @@
 ## SavedVariables: ZUISavedData
 
 
-config.lua
+zui_config.lua
 zui_chat.lua

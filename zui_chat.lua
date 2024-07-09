@@ -71,3 +71,56 @@ function Check_all_the_things()
 
 end
 
+-- split this into zui_chat
+------------------------------------------------------
+Jake_list = {
+    "Whomptilizer",
+    "Amelioration",
+    "Gusthebus",
+    "chungtesta",
+    "Palmface",
+    "Sedition",
+    "Jakeofcats",
+    "lucilletwo",
+    "cryinggame",
+    "madys",
+    "manimal",
+    "Jacobcats",
+    "Brownnote"
+}
+
+
+function Is_name_in_list(picked_name)
+    for _, name in ipairs(Jake_list) do
+        if name == picked_name then
+            return true
+        end
+    end
+    return false
+end
+
+C_ChatInfo.RegisterAddonMessagePrefix("ZUI-CHAT")
+
+local EventFrame = CreateFrame("frame", "EventFrame")
+EventFrame:RegisterEvent("UNIT_TARGET")
+
+local lastSent = 0
+local cooldown = 10
+
+EventFrame:SetScript("OnEvent", function(self, event, ...)
+    local currentTime = time()
+    if currentTime - lastSent < cooldown then
+        return
+    end
+
+    local jTarget = GetUnitName("Target")
+
+    if event == "UNIT_TARGET" and Is_name_in_list(jTarget) then
+        local class = strsplit(" ", UnitClass("Target"), 1)
+        local message = "Character: " .. jTarget .. " (" .. class .. ")\n" ..
+            "When: " .. date() .. "\n" ..
+            "Where: " .. GetZoneText() .. " - " .. GetMinimapZoneText()
+        C_ChatInfo.SendAddonMessage("ZUI-CHAT", message, "GUILD")
+        lastSent = currentTime
+    end
+end)

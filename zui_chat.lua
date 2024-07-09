@@ -16,7 +16,7 @@ chat:SetScript("OnDragStart", chat.StartMoving)
 chat:SetScript("OnDragStop", chat.StopMovingOrSizing)
 chat:Hide()
 chat:SetSize(400, 150);
-chat:SetPoint("CENTER", UIParent, "CENTER", 0, 300)0
+chat:SetPoint("CENTER", UIParent, "CENTER", 0, 300)
 
 chat.title = chat:CreateFontString(nil, "OVERLAY", "GameFontNormal");
 chat.title:SetFontObject("GameFontNormal");

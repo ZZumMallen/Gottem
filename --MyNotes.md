@@ -10,6 +10,22 @@
 # CreateFrame Args:
 ```lua
 local UIConfig = CreateFrame("Frame", "ZUI_MythicFrame", UIParent, "BasicFrameTemplateWithInset");
+
+UIConfig.title
+
+UIConfig is a widget
+
+title is a key that is being added to the table followed with a font string
+thinking like
+
+UIConfig = {
+    title,"font string"
+}
+
+
+
+
+
 ```
 1. type of frame is "Frame"
 2. Global frame name is 'ZUI_MythicFrame'
@@ -25,3 +41,8 @@ local UIConfig = CreateFrame("Frame", "ZUI_MythicFrame", UIParent, "BasicFrameTe
 - BOTTOMLEFT
 - BOTTOM
 - BOTTOMRIGHT
+
+
+To make use of this library you'll need to also have the usual LibStub and LibCallbackHandler libs.
+
+For a real usage example, take a look at the RaidChecklist project.

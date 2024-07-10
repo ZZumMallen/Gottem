@@ -1,4 +1,4 @@
-local AddonName, ZUI = ...
+local _, ZUI = ...
 _G["ZUI"] = ZUI
 ZUI.L = {}
 
@@ -40,7 +40,6 @@ function CreateButton(point, relativeFrame, relativePoint, yOffset, text)
     btn:SetText(text);
     btn:SetNormalFontObject("GameFontNormal")
     btn:SetHighlightFontObject("GameFontHighlight")
-    -- btn:SetScript("OnMouseDown", function()  end)
     return btn;
 end
 

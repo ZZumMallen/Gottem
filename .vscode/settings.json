@@ -12,7 +12,14 @@
         "class",
         "UISpecialFrames",
         "ChatFrame_AddChannel",
-        "GUILD"
+        "GUILD",
+        "InspectFrame",
+        "ExportUtil",
+        "UNKNOWN",
+        "LE_PARTY_CATEGORY_HOME",
+        "TalentUtil",
+        "TalentButtonUtil",
+        "LE_PARTY_CATEGORY_INSTANCE"
     ]
 
 }

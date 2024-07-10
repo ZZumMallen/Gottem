@@ -7,5 +7,5 @@
 - probably actually never though
 
 # Todo
-- [x] make main window movable
+- [ ] make main window movable
 - [ ] save main window position

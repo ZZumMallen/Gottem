@@ -6,5 +6,4 @@
 ## SavedVariables: ZUISavedData
 
 
-zui_config.lua
-
+core.lua

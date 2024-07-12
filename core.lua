@@ -1,6 +1,5 @@
-local _, ZUI = ...
-_G["ZUI"] = ZUI
-ZUI.L = {}
+local _, ZUI = ...;
+local f = ZUI.A
 
 
 ---@diagnostic disable: undefined-field
@@ -10,7 +9,7 @@ SlashCmdList.RELOADUI = ReloadUI
 
 
 --Create The Form (UI)
-local f = CreateFrame("Frame", nil, UIParent, "BasicFrameTemplateWithInset");
+f = CreateFrame("Frame", nil, UIParent, "BasicFrameTemplateWithInset");
 f:Hide()
 f:SetSize(200, 250);
 f:SetPoint("CENTER", UIParent, "CENTER", 750, 0)

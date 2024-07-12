@@ -19,7 +19,8 @@
         "LE_PARTY_CATEGORY_HOME",
         "TalentUtil",
         "TalentButtonUtil",
-        "LE_PARTY_CATEGORY_INSTANCE"
+        "LE_PARTY_CATEGORY_INSTANCE",
+        "toString"
     ]
 
 }

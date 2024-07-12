@@ -1,28 +1,8 @@
-local _, addon = ...
-
-local characterList = {}
-
-
-function addon.foo(mbr)
-    getInfo(mbr)
-    return info
-end
-
-
--- Date/timer (as an ad hoc index), dungeon, k level, IGN , server, class, spec, rio
-
-
---GetSpecialization() returns which spec number n
---GetSpecializationRole(n) returns role TANK HEAL DPS
---GetSpecializationInfo(n) - returned 581 on DH
---unitGUID
-
-
-
-
+local _, ZUI = ...;
+local L = ZUI.A
 
 -- party list
-local partyList = {
+L.PartyList = {
     "Player",
     "Party1",
     "Party2",
@@ -30,27 +10,8 @@ local partyList = {
     "Party4",
 }
 
--- party info loop
-function GroupInfo()
-    for _, v in pairs(partyList) do
-        local ilvl = ("%.2f"):format(GetAverageItemLevel(v))
-        local n = GetUnitName(v)
-        local c = UnitClass(v)
-        print(n .. "," .. c .. "," .. ilvl)
-    end
-end
-
-
--- --Player Clss info
--- localizedClass, englishClass, classIndex = UnitClass("unit");
--- u = "player"
--- print(strsplit(",", UnitClass(u), 1))
--- print("done")
-
-
-
-
-local specList = {
+-- list of specs by specID
+L.SpecList = {
 
     --Death Knight
     [250] = 'Blood',

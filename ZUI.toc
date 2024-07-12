@@ -6,4 +6,8 @@
 ## SavedVariables: ZUISavedData
 
 
+init.lua
+list.lua
 core.lua
+playerInfo.lua
+

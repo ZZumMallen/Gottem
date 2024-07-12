@@ -31,7 +31,13 @@ chat.message:SetWidth(chat:GetWidth() - 20) --new
 chat.message:SetJustifyH("LEFT") --new
 chat.message:SetJustifyV("TOP") --new
 
+local function HideFrame()
+    if chat:IsShown() then
+        chat:Hide()
+    end
+end
 
+HideFrame()
 
 local function OnEvent(self, event, arg1, arg2, ...)
     if event == "CHAT_MSG_ADDON" and arg1 == "ZUI-CHAT" and 
@@ -47,13 +53,7 @@ local function OnEvent(self, event, arg1, arg2, ...)
     end
 end
 
-local function HideFrame()
-    if chat:IsShown() then
-        chat:Hide()
-    end
-end
 
-HideFrame()
 
 local f = CreateFrame("Frame")
 f:RegisterEvent("CHAT_MSG_ADDON")

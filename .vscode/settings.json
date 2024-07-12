@@ -21,6 +21,9 @@
         "TalentButtonUtil",
         "LE_PARTY_CATEGORY_INSTANCE",
         "toString"
+    ],
+    "Lua.diagnostics.disable": [
+        "inject-field"
     ]
 
 }

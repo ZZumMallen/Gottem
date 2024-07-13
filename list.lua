@@ -10,6 +10,25 @@ L.PartyList = {
     "Party4",
 }
 
+L.JakeList = {
+--- Zachs characters for testing ---
+    "Whomptilizer",
+    "Amelioration",
+    "Gusthebus",
+    "chungtesta",
+-------------------------------------
+    "Palmface",
+    "Sedition",
+    "Jakeofcats",
+    "lucilletwo",
+    "cryinggame",
+    "madys",
+    "manimal",
+    "Jacobcats",
+    "Brownnote"
+}
+
+
 -- list of specs by specID
 L.SpecList = {
 

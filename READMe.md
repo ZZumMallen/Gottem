@@ -21,7 +21,8 @@ Second I like to make dumb stuff to make my friends laugh so I have included a r
 - [ ] Throttling for the addon chat
 - [ ] Sync/Save
 
-> [!CAUTION] :dagger: Yes I know libraries exist :dagger:
+> [!CAUTION]
+> :dagger: Yes I know libraries exist :dagger:
 
 # What have I crossed off the list?
 - [x] make main window movable

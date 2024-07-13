@@ -1,5 +1,7 @@
 [Mayron Wow Addons Series](https://www.youtube.com/watch?v=2G4iKA1m0FA&list=PL3wt7cLYn4N-3D3PTTUZBM2t1exFmoA2G&index=8)
 
+Updating to add to ggitignore
+
 # Saved Variables Path
 
 # Holy shit

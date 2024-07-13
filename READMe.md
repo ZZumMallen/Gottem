@@ -6,7 +6,7 @@ Second I like to make dumb stuff to make my friends laugh so I have included a r
 - This is also a cheap hyperfixation
 
 # When will it be ready?
-> [!Warning] 
+> [!WARNING] 
 >I have a poor track record of finishing dumb > projects like this
 - I hope to have have this ready for the launch of TWW 
 
@@ -21,7 +21,8 @@ Second I like to make dumb stuff to make my friends laugh so I have included a r
 - [ ] Throttling for the addon chat
 - [ ] Sync/Save
 
-> [!caution] :dagger: Yes I know libraries exist :dagger:
+> [!CAUTION]
+> :dagger: Yes I know libraries exist :dagger:
 
 # What have I crossed off the list?
 - [x] make main window movable

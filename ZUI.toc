@@ -9,5 +9,6 @@
 init.lua
 list.lua
 core.lua
-playerInfo.lua
+mythicInfo.lua
+spotter.lua
 

@@ -1,3 +1,7 @@
+---@diagnostic disable: undefined-field
+local _, ZUI = ...;
+local S = ZUI.A
+
 ZUISavedData = ZUISavedData or {}
 
 local function SaveData(message)
@@ -6,7 +10,6 @@ local function SaveData(message)
     end
     table.insert(ZUISavedData.chatMessages, message)
 end
-
 
 local chat = CreateFrame("Frame", nil, UIParent, "BasicFrameTemplateWithInset");
 chat:SetMovable(true)
@@ -18,6 +21,7 @@ chat:Hide()
 chat:SetSize(400, 150);
 chat:SetPoint("CENTER", UIParent, "CENTER", 0, 300)
 
+--make that title
 chat.title = chat:CreateFontString(nil, "OVERLAY", "GameFontNormal");
 chat.title:SetFontObject("GameFontNormal");
 chat.title:SetPoint("TOPLEFT", chat.TitleBg, "TOPLEFT", 5, -4);
@@ -42,10 +46,6 @@ HideFrame()
 local function OnEvent(self, event, arg1, arg2, ...)
     if event == "CHAT_MSG_ADDON" and arg1 == "ZUI-CHAT" and 
     Check_all_the_things() == 1 then
-        --print(arg2)
-        -- --attempting to make multiple lines
-        -- local currentText = chat.message:GetText() or ""
-        -- chat.message:SetText(currentText .. "\n" .. arg2)
         chat.message:SetText(arg2)
         chat:Show()
         SaveData(arg2)
@@ -54,14 +54,13 @@ local function OnEvent(self, event, arg1, arg2, ...)
 end
 
 
+local chatEventFrame = CreateFrame("Frame")
+chatEventFrame:RegisterEvent("CHAT_MSG_ADDON")
+chatEventFrame:SetScript("OnEvent", OnEvent)
 
-local f = CreateFrame("Frame")
-f:RegisterEvent("CHAT_MSG_ADDON")
-f:SetScript("OnEvent", OnEvent)
-
-local d = CreateFrame("Frame")
-d:RegisterEvent("PLAYER_REGEN_ENABLED")
-d:RegisterEvent("PLAYER_REGEN_DISABLED")
+local regenEventFrame = CreateFrame("Frame")
+regenEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+regenEventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 
 function Check_all_the_things()
     local _, _, difficultyID = GetInstanceInfo()
@@ -73,25 +72,11 @@ end
 
 -- split this into zui_chat
 ------------------------------------------------------
-Jake_list = {
-    "Whomptilizer",
-    "Amelioration",
-    "Gusthebus",
-    "chungtesta",
-    "Palmface",
-    "Sedition",
-    "Jakeofcats",
-    "lucilletwo",
-    "cryinggame",
-    "madys",
-    "manimal",
-    "Jacobcats",
-    "Brownnote"
-}
 
+local allTheJakes = S.JakeList
 
 function Is_name_in_list(picked_name)
-    for _, name in ipairs(Jake_list) do
+    for _, name in ipairs(allTheJakes) do
         if name == picked_name then
             return true
         end

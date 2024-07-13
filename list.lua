@@ -1,5 +1,8 @@
+---@diagnostic disable: undefined-field
 local _, ZUI = ...;
 local L = ZUI.A
+
+
 
 -- party list
 L.PartyList = {
@@ -11,12 +14,10 @@ L.PartyList = {
 }
 
 L.JakeList = {
---- Zachs characters for testing ---
-    "Whomptilizer",
-    "Amelioration",
-    "Gusthebus",
-    "chungtesta",
--------------------------------------
+    "Whomptilizer",--
+    "Amelioration",--
+    "Gusthebus",--
+    "chungtesta",--
     "Palmface",
     "Sedition",
     "Jakeofcats",

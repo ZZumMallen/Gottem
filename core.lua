@@ -1,10 +1,12 @@
 ---@diagnostic disable: undefined-field
+---@diagnostic disable: inject-field
+
 local _, ZUI = ...;
 local C = ZUI.A
 
 -- make the slash command
 SLASH_ZUI1 = "/zui"
-SLASH_ZUI2 = "/zz"
+-- SLASH_ZUI2 = "/zz"
 
 SLASH_RELOADUI1 = "/rl" -- quicker reloads
 SlashCmdList.RELOADUI = ReloadUI
@@ -20,7 +22,11 @@ core:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
 core:RegisterForDrag("LeftButton") 
 core:SetScript("OnDragStart", function(self) self:StartMoving() end) 
 
--- this defines what you do with the slash command in reference to the addon
+
+
+
+
+-- this defines what you do with the slash command in reference to the acore
 -- if you change "ZUI" to "zui" it will fail because the addon i ZUI
 SlashCmdList["ZUI"] = function()
     if core:IsShown() then
@@ -53,6 +59,8 @@ function CreateTitle(NewTitle)
     return title
 end
 
+-- point, relativeFrame, relativePoint, xOffset, yOffset
+
 -- Title
 local AppTitle = CreateTitle("ZUI M+ Thing")
 
@@ -63,12 +71,17 @@ startInfoBtn:SetScript("OnMouseDown", function(self, event) C.GroupInfo() end)
 local stopInfoBtn = CreateButton("TOP", startInfoBtn, "BOTTOM", -10, "End Group Info")
 stopInfoBtn:SetScript("OnMouseDown", function(self, event) C.GroupInfo() end)
 
--- local gBtn = CreateButton("TOP", rBtn, "BOTTOM", -10, "Group Ino")
+-- Check Box and Text -----------------------------------------------------------
+core.button = CreateFrame("CheckButton", nil, core, "UICheckButtonTemplate");
+core.button:SetPoint("LEFT", stopInfoBtn, "LEFT", -3, -40);
+core.button:SetText("Enable");
 
+core.buttonText = core:CreateFontString(nil, "OVERLAY");
+core.buttonText:SetFontObject("GameFontNormal");
+core.buttonText:SetPoint("LEFT", core.button, "RIGHT", 5, 0);
+core.buttonText:SetText("Enable Spotter");
 
-
-
-
+---------------------------------------------------------------------------------
 
 
 

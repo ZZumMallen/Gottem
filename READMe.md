@@ -15,8 +15,10 @@ Second I like to make dumb stuff to make my friends laugh so I have included a r
 - [ ] Write trigger(s) for incomplete key
 - [ ] Save Output
   * Would like data stored in google sheets
+- [ ] Get/Save Position
 
 ## DorkSpotter Priority List
+- [ ] Make checkbox enable/disable dorkspotter
 - [ ] Callback handler for the addon chat
 - [ ] Throttling for the addon chat
 - [ ] Sync/Save
@@ -27,3 +29,4 @@ Second I like to make dumb stuff to make my friends laugh so I have included a r
 # What have I crossed off the list?
 - [x] make main window movable
 - [x] save main window position
+- [x] added checkbox and textfram to settings window

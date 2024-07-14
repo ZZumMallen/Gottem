@@ -62,7 +62,7 @@ end
 -- point, relativeFrame, relativePoint, xOffset, yOffset
 
 -- Title
-local AppTitle = CreateTitle("ZUI M+ Thing")
+local AppTitle = CreateTitle("ZUI Testing Panel")
 
 -- Buttons
 local startInfoBtn = CreateButton("CENTER", core, "TOP", -60, "Start Group Info")

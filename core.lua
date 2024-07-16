@@ -1,8 +1,21 @@
 ---@diagnostic disable: undefined-field
 ---@diagnostic disable: inject-field
 
+if not ZUISavedData then ZUISavedData = {} end
+
 local _, ZUI = ...;
 local C = ZUI.A
+
+local defaults = {
+    i = v
+}
+
+
+function defaults:newDefault()
+    
+end
+
+
 
 -- make the slash command
 SLASH_ZUI1 = "/zui"
@@ -10,6 +23,7 @@ SLASH_ZUI1 = "/zui"
 
 SLASH_RELOADUI1 = "/rl" -- quicker reloads
 SlashCmdList.RELOADUI = ReloadUI
+
 
 --Create The Main Form (UI)
 local core = CreateFrame("Frame", nil, UIParent, "BasicFrameTemplateWithInset");
@@ -21,8 +35,6 @@ core:SetMovable(true)
 core:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
 core:RegisterForDrag("LeftButton") 
 core:SetScript("OnDragStart", function(self) self:StartMoving() end) 
-
-
 
 
 
@@ -62,7 +74,7 @@ end
 -- point, relativeFrame, relativePoint, xOffset, yOffset
 
 -- Title
-local AppTitle = CreateTitle("ZUI Testing Panel")
+AppTitle = CreateTitle("ZUI Testing Panel")
 
 -- Buttons
 local startInfoBtn = CreateButton("CENTER", core, "TOP", -60, "Start Group Info")

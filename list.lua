@@ -2,7 +2,7 @@
 local _, ZUI = ...;
 local L = ZUI.A
 
-
+print("List Loaded")
 
 -- party list
 L.PartyList = {

@@ -6,14 +6,7 @@ if not ZUISavedData then ZUISavedData = {} end
 local _, ZUI = ...;
 local C = ZUI.A
 
-local defaults = {
-    i = v
-}
-
-
-function defaults:newDefault()
-    
-end
+print("Core loaded")
 
 
 

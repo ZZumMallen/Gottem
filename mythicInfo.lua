@@ -1,4 +1,6 @@
 ---@diagnostic disable: undefined-field
+print("mythicInfo loaded")
+
 local _, ZUI = ...
 local M = ZUI.A
 

@@ -1,5 +1,7 @@
 ---@diagnostic disable: undefined-field
 ---@diagnostic disable: inject-field
+print("spotter loaded")
+
 local _, ZUI = ...;
 local S = ZUI.A
 

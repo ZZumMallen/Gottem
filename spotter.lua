@@ -2,10 +2,8 @@
 ---@diagnostic disable: inject-field
 print("spotter loaded")
 
-local _, ZUI = ...;
-local S = ZUI.A
-
-ZUISavedData = ZUISavedData or {}
+local _, core = ...;
+local S = core.C
 
 local function SaveData(message)
     if not ZUISavedData.chatMessages then

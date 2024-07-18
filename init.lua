@@ -1,3 +1,3 @@
 local _, core = ...
 _G["ZUI"] = core
-core.A = {}
+core.C = {}

@@ -1,6 +1,6 @@
 ---@diagnostic disable: undefined-field
 local _, core = ...;
-local L = core.A
+local L = core.C
 
 
 print("List Loaded")

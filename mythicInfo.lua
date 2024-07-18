@@ -2,7 +2,7 @@
 print("mythicInfo loaded")
 
 local _, core= ...;
-local M = core.A;
+local M = core.C;
 
 
 local function FinallyGetSpec(partyMemberName)

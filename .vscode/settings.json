@@ -20,7 +20,8 @@
         "TalentUtil",
         "TalentButtonUtil",
         "LE_PARTY_CATEGORY_INSTANCE",
-        "toString"
+        "toString",
+        "PLAYER"
     ],
     "editor.inlineSuggest.enabled": false
 

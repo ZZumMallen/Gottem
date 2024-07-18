@@ -5,12 +5,12 @@ print("spotter loaded")
 local _, core = ...;
 local S = core.C
 
-local function SaveData(message)
-    if not ZUISavedData.chatMessages then
-        ZUISavedData.chatMessages = {}
-    end
-    table.insert(ZUISavedData.chatMessages, message)
-end
+-- local function SaveData(message)
+--     if not ZUISavedData.chatMessages then
+--         ZUISavedData.chatMessages = {}
+--     end
+--     table.insert(ZUISavedData.chatMessages, message)
+-- end
 
 local chat = CreateFrame("Frame", nil, UIParent, "BasicFrameTemplateWithInset");
 chat:SetMovable(true)

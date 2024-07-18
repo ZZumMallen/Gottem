@@ -3,11 +3,11 @@
 ## Author: FancyPantsy
 ## Version: 1.0
 ## DefaultState: enabled
-## SavedVariables: zVars
+## SavedVariables: ZUI_MYTHIC_DB, zuiSpotted
 
 init.lua
 list.lua
 mythicInfo.lua
-ZUI.lua
+core.lua
 
 

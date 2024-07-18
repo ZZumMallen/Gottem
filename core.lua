@@ -57,7 +57,6 @@ end
 function C:CreateCheckBox(UI, ownPoint, parent, relPoint, xOffset, yOffset)
     UI.cbx = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");
     UI.cbx:SetPoint(ownPoint, parent, relPoint, xOffset, yOffset);
-    UI.cbx:GetChecked();
     return UI.cbx
 end
 
@@ -74,33 +73,43 @@ end
 -- Create Main Menu Item Functions
 ------------------------------------------------------------------------------
 
--- Creates the menu
-UI = C:CreateMenu(200, 250, 0, 0)
-MenuTitle = C:CreateMenuTitle(UI, "ZUI Menu")
+local f = CreateFrame("FRAME")
+f:RegisterEvent("ADDON_LOADED")
+f:SetScript("OnEvent", function(self, event, arg1, ...)
+    if event == "ADDON_LOADED" and arg1 == addonName then
+        ZUI_MYTHIC_DB = ZUI_MYTHIC_DB or {}
+        ZDB = ZUI_MYTHIC_DB
+        
+        ---@diagnostic disable: param-type-mismatch
 
--- Party Info Button
-BTN1 = C:CreateButton(UI, "Party Info", "TOP", UI, "TOP", 0, -35)
-UI.startBtn:SetScript("OnMouseDown", function() print(C.GroupInfo()) end)
+        -- Creates the menu
+        UI = C:CreateMenu(200, 250, 0, 0)
+        MenuTitle = C:CreateMenuTitle(UI, "ZUI Menu")
 
--- Test Button to check the checkbutton state
-BTN2 = C:CreateButton(UI, "Test","TOP", BTN1, "BOTTOM", 0, -10)
+        -- Party Info Button
+        BTN1 = C:CreateButton(UI, "Party Info", "TOP", UI, "TOP", 0, -35)
+        UI.startBtn:SetScript("OnMouseDown", function() print(C.GroupInfo()) end)
 
--- check button
-LoadInCombat = C:CreateCheckBox(UI, "TOPLEFT", BTN2, "BOTTOMLEFT", -3, -10)
-UI.startBtn:SetScript("OnMouseDown", function() C:IsChecked(UI) end)
+        -- Test Button to check the checkbutton state
+        BTN2 = C:CreateButton(UI, "Test", "TOP", BTN1, "BOTTOM", 0, -10)
 
---label for the checkbutton
-CheckLabel = C:CreateCheckBoxLable(UI,"enable", UI.cbx)
+        -- checkbox
+        LoadInCombat = C:CreateCheckBox(UI, "TOPLEFT", BTN2, "BOTTOMLEFT", -3, -10)
+        UI.cbx:SetChecked(ZDB["STATE"])
+        UI.cbx:SetScript("OnClick", function(self)
+            ZDB.STATE = ZDB.STATE or {}
+            ZDB.STATE = self:GetChecked();
+            end)
+        --label for the checkbutton
+        CheckLabel = C:CreateCheckBoxLable(UI, "enable", UI.cbx)
+    end
+end)
 
 ------------------------------------------------------------------------------
 -- Script Functions
 ------------------------------------------------------------------------------
 
--- returns true if checked, false of not checked
-function C:IsChecked(UI)
-    local state = UI.cbx:GetChecked()
-    return print(state)
-end
+
 
 -- toggles the main menu between show and hide
 function C:Toggle()
@@ -111,13 +120,12 @@ end
 -- adds us to the special boy club so we can use escape
 table.insert(UISpecialFrames, "core")
 
-
-local f = CreateFrame("FRAME")
-f:RegisterEvent("PLAYER_LOGOUT")
-f:SetScript("OnEvent", function(self, event,...)
+local j = CreateFrame("FRAME")
+j:RegisterEvent("PLAYER_LOGOUT")
+j:SetScript("OnEvent", function(self, event,...)
     if event == "PLAYER_LOGOUT" then
-        -- table.insert(ZUISavedData, IsChecked());
-        -- table.insert(ZUISavedData, 2);
+        ZDB.DUNGEON = ZDB.DUNGEON or {};
+        ZDB.DUNGEON = "Tractor Pull"
     end
 end)
 

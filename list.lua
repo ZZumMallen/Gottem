@@ -1,16 +1,17 @@
 ---@diagnostic disable: undefined-field
-local _, ZUI = ...;
-local L = ZUI.A
+local _, core = ...;
+local L = core.A
+
 
 print("List Loaded")
 
 -- party list
 L.PartyList = {
-    "Player",
-    "Party1",
-    "Party2",
-    "Party3",
-    "Party4",
+    "PLAYER",
+    "PARTY1",
+    "PARTY2",
+    "PARTY3",
+    "PARTY4",
 }
 
 L.JakeList = {

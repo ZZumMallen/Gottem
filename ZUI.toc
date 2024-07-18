@@ -5,10 +5,9 @@
 ## DefaultState: enabled
 ## SavedVariables: ZUISavedData
 
-
 init.lua
 list.lua
-core.lua
 mythicInfo.lua
-spotter.lua
+core.lua
+
 

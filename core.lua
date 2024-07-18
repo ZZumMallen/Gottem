@@ -1,103 +1,55 @@
 ---@diagnostic disable: undefined-field
 ---@diagnostic disable: inject-field
 
-if not ZUISavedData then ZUISavedData = {} end
+local _, core = ...;
+local C = core.A;
+local UI;
 
-local _, ZUI = ...;
-local C = ZUI.A
-
-print("Core loaded")
-
-
-
--- make the slash command
-SLASH_ZUI1 = "/zui"
--- SLASH_ZUI2 = "/zz"
-
-SLASH_RELOADUI1 = "/rl" -- quicker reloads
+SLASH_RELOADUI1 = "/rl"
 SlashCmdList.RELOADUI = ReloadUI
 
+SLASH_ZUI1 = "/zui"
+SlashCmdList["ZUI"] = function() C:Toggle() end;
 
---Create The Main Form (UI)
-local core = CreateFrame("Frame", nil, UIParent, "BasicFrameTemplateWithInset");
-core:Hide()
-core:EnableMouse(true)
-core:SetSize(200, 250);
-core:SetPoint("CENTER", UIParent, "CENTER", 750, 0)
-core:SetMovable(true)
-core:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
-core:RegisterForDrag("LeftButton") 
-core:SetScript("OnDragStart", function(self) self:StartMoving() end) 
+function C:CreateMenu()
+    UI = CreateFrame("Frame", nil, UIParent, "BasicFrameTemplateWithInset");
+    UI:Hide();
+    UI:EnableMouse(true);
+    UI:SetSize(200, 250);
+    UI:SetPoint("CENTER", UIParent, "CENTER", 0, 0);
+    UI:SetMovable(true);
+    UI:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end);
+    UI:RegisterForDrag("LeftButton");
+    UI:SetScript("OnDragStart", function(self) self:StartMoving() end);
 
+    UI.title = UI:CreateFontString(nil, "OVERLAY");
+    UI.title:SetFontObject("GameFontNormal");
+    UI.title:SetPoint("LEFT", UI.TitleBg, "LEFT", 5, 0);
+    UI.title:SetText("ZUI Options");
 
+    UI.startBtn = CreateFrame("Button", nil, UI, "UIPanelButtonTemplate");
+    UI.startBtn:SetPoint("TOP", UI, "TOP", 0, -35);
+    UI.startBtn:SetSize(140, 40);
+    UI.startBtn:SetText("Get Party Info");
+    UI.startBtn:SetNormalFontObject("GameFontNormal");
+    UI.startBtn:SetHighlightFontObject("GameFontHighlight");
+    UI.startBtn:SetScript("OnMouseDown", function() print(C.GroupInfo()) end)
 
--- this defines what you do with the slash command in reference to the acore
--- if you change "ZUI" to "zui" it will fail because the addon i ZUI
-SlashCmdList["ZUI"] = function()
-    if core:IsShown() then
-        core:Hide()
-    else
-        core:Show()
-    end
+    UI.cbx = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");
+    UI.cbx:SetPoint("TOPLEFT", UI.startBtn, "BOTTOMLEFT", -3, -10);
+
+    UI.cbxText = UI:CreateFontString(nil,"OVERLAY")
+    UI.cbxText:SetPoint("LEFT", UI.cbx, "RIGHT", 10, 0);
+    UI.cbxText:SetFontObject("GameFontNormal")
+    UI.cbxText:SetText("Enabled");
+
+    return UI, print("UI Frame loaded")
 end
 
--- adds this frame to the table of imprtant fucntions that can close with the esc key
 table.insert(UISpecialFrames, "core")
 
--- Function that makes buttons
-function CreateButton(point, relativeFrame, relativePoint, yOffset, text)
-    local btn = CreateFrame("Button", nil, core, "UIPanelButtonTemplate");
-    btn:SetPoint(point, relativeFrame, relativePoint, 0, yOffset);
-    btn:SetSize(140, 40);
-    btn:SetText(text);
-    btn:SetNormalFontObject("GameFontNormal")
-    btn:SetHighlightFontObject("GameFontHighlight")
-    return btn;
+function C:Toggle()
+    print("Toggle triggered")
+    local menu = UI or C:CreateMenu();
+    menu:SetShown(not menu:IsShown());
 end
-
--- New Title Creator
-function CreateTitle(NewTitle)
-    local title = core:CreateFontString(nil, "OVERLAY");
-    title:SetFontObject("GameFontNormal");
-    title:SetPoint("LEFT", core.TitleBg, "LEFT", 5, 0);
-    title:SetText(NewTitle);
-    return title
-end
-
--- point, relativeFrame, relativePoint, xOffset, yOffset
-
--- Title
-AppTitle = CreateTitle("ZUI Testing Panel")
-
--- Buttons
-local startInfoBtn = CreateButton("CENTER", core, "TOP", -60, "Start Group Info")
-startInfoBtn:SetScript("OnMouseDown", function(self, event) C.GroupInfo() end)
-
-local stopInfoBtn = CreateButton("TOP", startInfoBtn, "BOTTOM", -10, "End Group Info")
-stopInfoBtn:SetScript("OnMouseDown", function(self, event) C.GroupInfo() end)
-
--- Check Box and Text -----------------------------------------------------------
-core.button = CreateFrame("CheckButton", nil, core, "UICheckButtonTemplate");
-core.button:SetPoint("LEFT", stopInfoBtn, "LEFT", -3, -40);
-core.button:SetText("Enable");
-
-core.buttonText = core:CreateFontString(nil, "OVERLAY");
-core.buttonText:SetFontObject("GameFontNormal");
-core.buttonText:SetPoint("LEFT", core.button, "RIGHT", 5, 0);
-core.buttonText:SetText("Enable Spotter");
-
----------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-

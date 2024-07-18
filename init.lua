@@ -1,5 +1,3 @@
-local _, ZUI = ...
-_G["ZUI"] = ZUI
-ZUI.A = {}
-
-print("Init Loaded")
+local _, core = ...
+_G["ZUI"] = core
+core.A = {}

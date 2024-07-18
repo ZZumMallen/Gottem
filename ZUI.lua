@@ -32,6 +32,7 @@ function C:CreateMenu(menuWidth,menuHeight, menuPosX, meniPoxY)
     return UI, print("CreateMenu loaded")
 end
 
+---@param UI frame
 function C:CreateMenuTitle(UI, titleName)
     UI.title = UI:CreateFontString(nil, "OVERLAY");
     UI.title:SetFontObject("GameFontNormal");
@@ -40,6 +41,7 @@ function C:CreateMenuTitle(UI, titleName)
     return UI.title, print("menu title loaded")
 end
 
+---@param UI frame
 function C:CreateButton(UI, btnLabel, ownPoint, parent, relPoint, xOffset, yOffset)
     UI.startBtn = CreateFrame("Button", nil, UI, "UIPanelButtonTemplate");
     UI.startBtn:SetPoint(ownPoint, parent, relPoint, xOffset, yOffset);
@@ -51,6 +53,7 @@ function C:CreateButton(UI, btnLabel, ownPoint, parent, relPoint, xOffset, yOffs
     return UI.startBtn
 end
 
+---@param UI frame
 function C:CreateCheckBox(UI, ownPoint, parent, relPoint, xOffset, yOffset)
     UI.cbx = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");
     UI.cbx:SetPoint(ownPoint, parent, relPoint, xOffset, yOffset);
@@ -58,6 +61,7 @@ function C:CreateCheckBox(UI, ownPoint, parent, relPoint, xOffset, yOffset)
     return UI.cbx
 end
 
+---@param UI frame
 function C:CreateCheckBoxLable(UI, boxLabel, parentBox)
     UI.checkBoxLabel = UI:CreateFontString(nil,"OVERLAY")
     UI.checkBoxLabel:SetPoint("LEFT", parentBox, "RIGHT", 10, 0);
@@ -107,14 +111,15 @@ end
 -- adds us to the special boy club so we can use escape
 table.insert(UISpecialFrames, "core")
 
--- local f = CreateFrame("FRAME")
--- f:RegisterEvent("PLAYER_LOGOUT")
--- f:SetScript("OnEvent", function(self, event,...)
---     if event == "PLAYER_LOGOUT" then
---         table.insert(ZUISavedData, IsChecked());
---         table.insert(ZUISavedData, 2);
---     end
--- end)
+
+local f = CreateFrame("FRAME")
+f:RegisterEvent("PLAYER_LOGOUT")
+f:SetScript("OnEvent", function(self, event,...)
+    if event == "PLAYER_LOGOUT" then
+        -- table.insert(ZUISavedData, IsChecked());
+        -- table.insert(ZUISavedData, 2);
+    end
+end)
 
 
 

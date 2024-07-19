@@ -2,16 +2,17 @@
 local _, core = ...;
 local L = core.C
 
+if not L.PartyList then L.PartyList = {} end
 
 print("List Loaded")
 
 -- party list
 L.PartyList = {
-    "PLAYER",
-    "PARTY1",
-    "PARTY2",
-    "PARTY3",
-    "PARTY4",
+    [1] = "PLAYER",
+    [2] = "PARTY1",
+    [3] = "PARTY2",
+    [4] = "PARTY3",
+    [5] = "PARTY4",
 }
 
 L.JakeList = {

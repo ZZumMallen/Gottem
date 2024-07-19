@@ -3,7 +3,7 @@
 ## Author: FancyPantsy
 ## Version: 1.0
 ## DefaultState: enabled
-## SavedVariables: ZUI_MYTHIC_DB, zuiSpotted
+## SavedVariables: ZUI_MYTHIC_DB, ZUI_MYTHIC_PARTY3
 
 init.lua
 list.lua

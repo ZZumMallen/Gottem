@@ -49,7 +49,7 @@ local function OnEvent(self, event, arg1, arg2, ...)
     Check_all_the_things() == 1 then
         chat.message:SetText(arg2)
         chat:Show()
-        SaveData(arg2)
+        -- SaveData(arg2)
         C_Timer.After(10, HideFrame)
     end
 end

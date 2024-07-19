@@ -3,8 +3,8 @@ local _, core = ...;
 local L = core.C
 
 if not L.PartyList then L.PartyList = {} end
-
-print("List Loaded")
+if not L.JakeList then L.JakeList = {} end
+if not L.SpecList then L.SpecList = {} end
 
 -- party list
 L.PartyList = {
@@ -30,7 +30,6 @@ L.JakeList = {
     "Jacobcats",
     "Brownnote"
 }
-
 
 -- list of specs by specID
 L.SpecList = {

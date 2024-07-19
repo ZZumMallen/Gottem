@@ -3,11 +3,12 @@
 ## Author: FancyPantsy
 ## Version: 1.0
 ## DefaultState: enabled
-## SavedVariables: ZUI_MYTHIC_DB, ZUI_MYTHIC_PARTY3
+## SavedVariables: ZUI_MYTHIC_DB, ZUI_GOTTEM, ZUI_MYTHIC_PARTY3
 
 init.lua
 list.lua
-mythicInfo.lua
 core.lua
+gottem.lua
+mythicInfo.lua
 
 

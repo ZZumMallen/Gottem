@@ -120,14 +120,6 @@ end
 -- adds us to the special boy club so we can use escape
 table.insert(UISpecialFrames, "core")
 
-local j = CreateFrame("FRAME")
-j:RegisterEvent("PLAYER_LOGOUT")
-j:SetScript("OnEvent", function(self, event,...)
-    if event == "PLAYER_LOGOUT" then
-        ZDB.DUNGEON = ZDB.DUNGEON or {};
-        ZDB.DUNGEON = "Tractor Pull"
-    end
-end)
 
 
 

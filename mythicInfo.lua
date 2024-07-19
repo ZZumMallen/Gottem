@@ -31,7 +31,14 @@ f:SetScript("OnEvent", function(self, event, arg1,...)
     end)
 
 
-
+local j = CreateFrame("FRAME")
+j:RegisterEvent("PLAYER_LOGOUT")
+j:SetScript("OnEvent", function(self, event, ...)
+    if event == "PLAYER_LOGOUT" then
+        ZDB.DUNGEON = ZDB.DUNGEON or {};
+        ZDB.DUNGEON = "Dungeon Name Goes here"
+    end
+end)
 ----------------------------------------------------------------
 
 --= M.PartyList[i]

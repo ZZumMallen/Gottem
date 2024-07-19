@@ -8,6 +8,8 @@ local C = core.C;
 ZUI_MYTHIC_DB = ZUI_MYTHIC_DB or {}
 ZDB = ZUI_MYTHIC_DB
 
+ZUI_MYTHIC_DB.STATE = ZUI_MYTHIC_DB.STATE or {}
+ZUI_MYTHIC_DB.DEBUG = ZUI_MYTHIC_DB.DEBUG or {}
 
 ------------------------------------------------------------------------------
 -- Slash Commands
@@ -118,6 +120,7 @@ local f = CreateFrame("FRAME")
 f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", function(self, event, arg1, ...)
     if event == "ADDON_LOADED" and arg1 == addonName then
+
         print("Addons Loaded".." - "..arg1)
 
         -- Creates the menu--

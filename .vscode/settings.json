@@ -24,7 +24,11 @@
         "PLAYER",
         "GetUnitName",
         "UIParent",
-        "CreateFrame"
+        "CreateFrame",
+        "CHAT_MSG_SAY",
+        "SELECTED_CHAT_FRAME",
+        "TARGET",
+        "CONTINUE"
     ],
     "editor.inlineSuggest.enabled": false
 

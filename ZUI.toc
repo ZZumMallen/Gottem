@@ -7,8 +7,10 @@
 
 init.lua
 list.lua
-core.lua
 gottem.lua
 mythicInfo.lua
+core.lua
+
+
 
 

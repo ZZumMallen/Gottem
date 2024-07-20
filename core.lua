@@ -8,9 +8,6 @@ local C = core.C;
 ZUI_MYTHIC_DB = ZUI_MYTHIC_DB or {}
 ZDB = ZUI_MYTHIC_DB
 
-ZUI_MYTHIC_DB.STATE = ZUI_MYTHIC_DB.STATE or {}
-ZUI_MYTHIC_DB.DEBUG = ZUI_MYTHIC_DB.DEBUG or {}
-
 ------------------------------------------------------------------------------
 -- Slash Commands
 ------------------------------------------------------------------------------
@@ -34,7 +31,7 @@ function C:CreateMenu(menuWidth,menuHeight, menuPosX, meniPoxY)
     UI:RegisterForDrag("LeftButton");
     UI:SetScript("OnDragStart", function(self) self:StartMoving() end);
     UI:Hide();
-    return UI, print("1-Menu Consturcor: Loaded")
+    return UI --print("1-Menu Consturcor: Loaded")
 end
 
 ------------------------------------------------------------------------------
@@ -46,7 +43,7 @@ function C:CreateMenuTitle(UI, titleName)
     UI.title:SetFontObject("GameFontNormal");
     UI.title:SetPoint("LEFT", UI.TitleBg, "LEFT", 5, 0);
     UI.title:SetText(titleName);
-    return UI.title, print("2-Menu Title Constructor: Loaded")
+    return UI.title --print("2-Menu Title Constructor: Loaded")
 end
 
 ------------------------------------------------------------------------------
@@ -61,7 +58,7 @@ function C:CreateButton1(xOffset, yOffset)
     UI.BTN_PartyInfo:SetNormalFontObject("GameFontNormal");
     UI.BTN_PartyInfo:SetHighlightFontObject("GameFontHighlight");
     UI.BTN_PartyInfo:SetScript("OnMouseDown", function() print("Party function placeholder") end)
-    return UI.BTN_PartyInfo, print("3-Button Constructor: Loaded")
+    return UI.BTN_PartyInfo --print("3-Button Constructor: Loaded")
 end
 
 function C:CreateButton2(xOffset, yOffset)
@@ -72,7 +69,7 @@ function C:CreateButton2(xOffset, yOffset)
     UI.BTN_Test:SetNormalFontObject("GameFontNormal");
     UI.BTN_Test:SetHighlightFontObject("GameFontHighlight");
     UI.BTN_Test:SetScript("OnMouseDown", function() print("Test function placeholder") end)
-    return UI.BTN_Test, print("3-Button Constructor: Loaded")
+    return UI.BTN_Test --print("3-Button Constructor: Loaded")
 end
 
 ------------------------------------------------------------------------------
@@ -82,22 +79,25 @@ end
 function C:CreateCheckBox1() -- State
     UI.CBX_Enable = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");    
     UI.CBX_Enable:SetPoint("TOPLEFT", BTN2, "BOTTOMLEFT", -3, -10);
+    ---@diagnostic disable-next-line:param-type-mismatch
     UI.CBX_Enable:SetChecked(ZUI_MYTHIC_DB["STATE"]);    
     UI.CBX_Enable:SetScript("OnClick", function(self)
+        ZUI_MYTHIC_DB.STATE = ZUI_MYTHIC_DB.STATE or {}
         ZUI_MYTHIC_DB.STATE = self:GetChecked();
         print("Check Box1 Registered:")end);   
-    return UI.CBX_Enable, print("4-CheckBox Constructor: Loaded");
+    return UI.CBX_Enable --print("4-CheckBox Constructor: Loaded");
 end
 
 function C:CreateCheckBox2() -- Debug
     UI.CBX_Debug = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");
     UI.CBX_Debug:SetPoint("TOPLEFT", CBX_Enable, "BOTTOMLEFT", -0, -10);
+    ---@diagnostic disable-next-line:param-type-mismatch
     UI.CBX_Debug:SetChecked(ZUI_MYTHIC_DB["DEBUG"]);
     UI.CBX_Debug:SetScript("OnClick", function(self)
         ZUI_MYTHIC_DB.DEBUG = ZUI_MYTHIC_DB.DEBUG or {}
         ZUI_MYTHIC_DB.DEBUG = self:GetChecked();
         print("Check Box2 Registered:")        end);
-    return UI.CBX_Debug, print("4.5-CheckBox Constructor: Loaded");
+    return UI.CBX_Debug --print("4.5-CheckBox Constructor: Loaded");
 end
 
 ------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ function C:CreateCheckBoxLabel(CBX_label, boxLabel, parentBox)
     CBX_label:SetPoint("LEFT", parentBox, "RIGHT", 10, 0);
     CBX_label:SetFontObject("GameFontNormal")
     CBX_label:SetText(boxLabel);
-    return CBX_label, print("5-Checkbox Label Constructor: Loaded")
+    return CBX_label --print("5-Checkbox Label Constructor: Loaded")
 end
 
 ------------------------------------------------------------------------------
@@ -121,7 +121,7 @@ f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", function(self, event, arg1, ...)
     if event == "ADDON_LOADED" and arg1 == addonName then
 
-        print("Addons Loaded".." - "..arg1)
+        if ZUI_MYTHIC_DB["DEBUG"] == true then print(arg1 .. ": " .. "Core Loaded") end
 
         -- Creates the menu--
         UI = C:CreateMenu(200, 250, 0, 0)

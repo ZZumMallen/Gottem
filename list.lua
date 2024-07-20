@@ -1,12 +1,22 @@
 ---@diagnostic disable: undefined-field
-local _, core = ...;
+local addonName, core = ...;
 local L = core.C
 
-if not L.PartyList then L.PartyList = {} end
-if not L.JakeList then L.JakeList = {} end
-if not L.SpecList then L.SpecList = {} end
+local h = CreateFrame("Frame")
+h:RegisterEvent("ADDON_LOADED")
 
--- party list
+h:SetScript("OnEvent", function(self, event, arg1, ...) 
+    if event == "ADDON_LOADED" and arg1 == addonName then
+        L.tList = L.tList or {}
+
+
+
+
+    end
+end)
+
+
+
 L.PartyList = {
     [1] = "PLAYER",
     [2] = "PARTY1",
@@ -15,11 +25,12 @@ L.PartyList = {
     [5] = "PARTY4",
 }
 
-L.JakeList = {
-    "Whomptilizer",--
-    "Amelioration",--
-    "Gusthebus",--
-    "chungtesta",--
+
+L.tList = {
+    "Whomptilizer",
+    "Amelioration",
+    "Gusthebus",
+    "Chungtesta",
     "Palmface",
     "Sedition",
     "Jakeofcats",
@@ -30,6 +41,33 @@ L.JakeList = {
     "Jacobcats",
     "Brownnote"
 }
+
+
+
+-- -- party list
+-- L.PartyList = {
+--     [1] = "PLAYER",
+--     [2] = "PARTY1",
+--     [3] = "PARTY2",
+--     [4] = "PARTY3",
+--     [5] = "PARTY4",
+-- }
+
+-- L.tList = {
+--     "Whomptilizer",
+--     "Amelioration",
+--     "Gusthebus",
+--     "Chungtesta",
+--     "Palmface",
+--     "Sedition",
+--     "Jakeofcats",
+--     "lucilletwo",
+--     "cryinggame",
+--     "madys",
+--     "manimal",
+--     "Jacobcats",
+--     "Brownnote"
+-- }
 
 -- list of specs by specID
 L.SpecList = {

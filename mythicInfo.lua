@@ -1,5 +1,4 @@
 ---@diagnostic disable: undefined-field
-print("mythicInfo loaded")
 
 local addonName, core = ...;
 local M = core.C;
@@ -8,6 +7,7 @@ local f = CreateFrame("FRAME")
 f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", function(self, event, arg1,...)
     if event == "ADDON_LOADED" and arg1 == addonName then
+        if ZUI_MYTHIC_DB["DEBUG"] == true then print(arg1 .. ": " .. "Party Info Loaded") end;
         if not M.PartyList then M.PartyList = {} end
             if not ZUI_MYTHIC_PARTY3 then ZUI_MYTHIC_PARTY3 = {} end
                 if not ZUI_MYTHIC_PARTY3.PARTY then ZUI_MYTHIC_PARTY3.PARTY = {} end

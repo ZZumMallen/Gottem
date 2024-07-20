@@ -9,7 +9,9 @@ init.lua
 list.lua
 gottem.lua
 mythicInfo.lua
+messager.lua
 core.lua
+
 
 
 

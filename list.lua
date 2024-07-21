@@ -27,6 +27,7 @@ L.PartyList = {
 
 
 L.tList = {
+    "Marnival",
     "Whomptilizer",
     "Amelioration",
     "Gusthebus",

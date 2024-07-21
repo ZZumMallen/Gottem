@@ -20,13 +20,16 @@ function OnEvent(self, event, arg1, ...)
    
         ---@class mapID:number
         local mapID = C_Map.GetBestMapForUnit(X)        
-        local pos = C_Map.GetPlayerMapPosition(mapID, X);
-        
-        --print(C_Map.GetMapInfo(mapID).name, math.ceil(pos.x * 10000) / 100, math.ceil(pos.y * 10000) / 100)
+        local pos = C_Map.GetPlayerMapPosition(mapID, X);        
+
         G.locName = C_Map.GetMapInfo(mapID).name
-        G.locX = math.ceil(pos.x * 10000) / 100
-        G.locY = math.ceil(pos.y * 10000) / 100
-       
+
+        if pos == nil then
+            return 
+        else
+            G.locX = math.ceil(pos.x * 10000) / 100
+            G.locY = math.ceil(pos.y * 10000) / 100
+        end       
     end
 end
 

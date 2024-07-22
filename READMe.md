@@ -33,7 +33,8 @@ Second I like to make dumb stuff to make my friends laugh so I have included a r
 - [x] added checkbox and textfram to settings window
 - [x] Callback handler for the addon chat
 
-> [!CAUTION] Evil Follows
+> [!CAUTION]
+> Evil Follows
 
 ## M+ Data backburnered - this is a pain:
 - [ ] Write trigger(s) for incomplete key

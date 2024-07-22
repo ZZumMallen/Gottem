@@ -10,7 +10,7 @@ Second I like to make dumb stuff to make my friends laugh so I have included a r
 >I have a poor track record of finishing dumb > projects like this
 - I hope to have have this ready for the launch of TWW 
 
-# TODO: Gottem
+# To do:
 ## Messager
 - [ ] Readable timestamp
 - [ ] Create a reasonable frame to hold the alert

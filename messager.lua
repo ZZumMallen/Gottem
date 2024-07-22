@@ -1,25 +1,34 @@
-local addonName, core = ...;
+local addonName, core = ...
+core.C = core.C or {}
 local G = core.C
+
 G.triggerPrefix = "ope_gottem"
 G.messagePrefix = "sneak_right_past_ya_there"
 
+local MyFullName
+
 SLASH_ZGG1 = "/gottem"
-SlashCmdList["ZGG"] = function() C_ChatInfo.SendAddonMessage(G.triggerPrefix, "go", "Guild") end;
+SlashCmdList["ZGG"] = function() C_ChatInfo.SendAddonMessage(G.triggerPrefix, "go", "GUILD") end;
 
 local f = CreateFrame("FRAME")
 f:RegisterEvent("ADDON_LOADED")
 f:RegisterEvent("CHAT_MSG_ADDON")
-f:SetScript("OnEvent", function(self, event, arg1, arg2, ...)
+f:SetScript("OnEvent", function(self, event, arg1, arg2, _, arg4,...)
     if event == "ADDON_LOADED" and arg1 == addonName then
         C_ChatInfo.RegisterAddonMessagePrefix(G.triggerPrefix)
+        local name = GetUnitName("player")
+        local realm = GetRealmName()
+        MyFullName = name .. "-" .. realm
         print("Messager Loaded")
     elseif
-        event == "CHAT_MSG_ADDON" and arg1 == G.triggerPrefix and arg2 == "go" then
+        event == "CHAT_MSG_ADDON" and arg1 == G.triggerPrefix and arg2 == "go" and arg4 == MyFullName then
+        C_ChatInfo.RegisterAddonMessagePrefix(G.triggerPrefix)
         Verify_Store()
-
-      
-        end
-end)   
+    elseif
+        event == "CHAT_MSG_ADDON" and arg1 == G.triggerPrefix and arg2 ~= "go" then
+        message(arg2)
+    end
+end)
 
 function Verify_Store()
     local X = GetUnitName("Target")
@@ -30,16 +39,18 @@ function Verify_Store()
         if UnitIsPlayer("Target") then
             for _, j in ipairs(G.tList) do
                 if j == X then
-                    print(X)
-                    G.isFound = true
-                    G.foundTarget = X
                     G.Result = X
                 end
             end
         else
             local thing = UnitCreatureFamily("target")
-            print("That's a " .. thing .. " you idiot!")
-            return
+            if thing == nil then
+                print("That is an NPC named "..X.."...")
+                return
+            else
+                print("Great, you found a " .. tostring(thing) .. ", you idiot!")
+                return
+            end
         end
     end
 
@@ -47,7 +58,7 @@ function Verify_Store()
     local mapID = C_Map.GetBestMapForUnit(X)
     local pos = C_Map.GetPlayerMapPosition(mapID, X);
 
-    G.locName = C_Map.GetMapInfo(mapID).name
+    --G.locName = C_Map.GetMapInfo(mapID).name
 
     if pos == nil then
         G.locX = 0
@@ -57,5 +68,15 @@ function Verify_Store()
         G.locX = math.ceil(pos.x * 10000) / 100
         G.locY = math.ceil(pos.y * 10000) / 100
     end
-    print(G.Result, G.isFound, G.foundTarget, G.locName, G.locX, G.locY)
+
+    if GetZoneText() == GetMinimapZoneText() then
+        G.locName = GetZoneText()
+    else
+        G.locName = GetMinimapZoneText()..", "..GetZoneText()
+    end
+
+    print(G.Result, G.locName, G.locX, G.locY)
+    local msgString = tostring(X).." found at "..tostring(G.locX)..", "..tostring(G.locY).." in "..tostring(G.locName)
+    C_ChatInfo.SendAddonMessage(G.triggerPrefix, msgString, "GUILD")
+
 end

@@ -1,5 +1,7 @@
 ---@diagnostic disable: undefined-field
 
+-- longer, add to gitIgnote
+
 local addonName, core = ...;
 local M = core.C;
 

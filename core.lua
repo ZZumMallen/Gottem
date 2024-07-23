@@ -5,9 +5,6 @@ local addonName, core = ...;
 local C = core.C;
 
 
-GTTM_DB = GTTM_DB or {}
-ZDB = GTTM_DB
-
 ------------------------------------------------------------------------------
 -- Slash Commands
 ------------------------------------------------------------------------------
@@ -77,29 +74,45 @@ end
 -- Check Box
 ------------------------------------------------------------------------------
 
-function C:CreateCheckBox1() -- in_combat
-    UI.CBX_Enable = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");    
-    UI.CBX_Enable:SetPoint("TOPLEFT", BTN2, "BOTTOMLEFT", -3, -10);
+function C:CreateCheckBox1() -- NPCs
+    UI.CBX_NPC = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");
+    UI.CBX_NPC:SetPoint("TOPLEFT", BTN1, "BOTTOMLEFT", -3, -10);
     ---@diagnostic disable-next-line:param-type-mismatch
-    UI.CBX_Enable:SetChecked(GTTM_DB["in_combat"]);    
-    UI.CBX_Enable:SetScript("OnClick", function(self)
-        GTTM_DB.in_combat = GTTM_DB.in_combat or {}
-        GTTM_DB.in_combat = self:GetChecked();
-        print("Check Box1 Registered:")end);   
-    return UI.CBX_Enable --print("4-CheckBox Constructor: Loaded");
+    UI.CBX_NPC:SetChecked(GDDM_DB_OPTIONS["NPC"]);
+    UI.CBX_NPC:SetScript("OnClick", function(self)        
+        GDDM_DB_OPTIONS.NPC = self:GetChecked();
+        print("NPCs", GDDM_DB_OPTIONS.NPC)
+    end);
+    return UI.CBX_NPC --print("4-CheckBox Constructor: Loaded");
 end
 
-function C:CreateCheckBox2() -- popup_state
-    UI.CBX_popup_state = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");
-    UI.CBX_popup_state:SetPoint("TOPLEFT", CBX_Enable, "BOTTOMLEFT", -0, -10);
+function C:CreateCheckBox2() -- Animals
+    UI.CBX_Animal = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");
+    UI.CBX_Animal:SetPoint("TOPLEFT", CBX_NPC, "BOTTOMLEFT", -0, -10);
     ---@diagnostic disable-next-line:param-type-mismatch
-    UI.CBX_popup_state:SetChecked(GTTM_DB["popup_state"]);
-    UI.CBX_popup_state:SetScript("OnClick", function(self)
-        GTTM_DB.popup_state = GTTM_DB.popup_state or {}
-        GTTM_DB.popup_state = self:GetChecked();
-        print("Check Box2 Registered:")        end);
-    return UI.CBX_popup_state --print("4.5-CheckBox Constructor: Loaded");
+    UI.CBX_Animal:SetChecked(GDDM_DB_OPTIONS["Animals"]);
+    UI.CBX_Animal:SetScript("OnClick", function(self)        
+        GDDM_DB_OPTIONS.Animals = self:GetChecked();
+        print("Animals", GDDM_DB_OPTIONS.Animals)
+    end);
+    return UI.CBX_Animal --print("4.5-CheckBox Constructor: Loaded");
 end
+
+function C:CreateCheckBox3() -- Combat
+    UI.CBX_Combat = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");
+    UI.CBX_Combat:SetPoint("TOPLEFT", CBX_ANIMALS, "BOTTOMLEFT", -0, -10);
+    ---@diagnostic disable-next-line:param-type-mismatch
+    UI.CBX_Combat:SetChecked(GDDM_DB_OPTIONS["Combat"]);
+    UI.CBX_Combat:SetScript("OnClick", function(self)        
+        GDDM_DB_OPTIONS.Combat = self:GetChecked();
+        print("Combat", GDDM_DB_OPTIONS.Combat) 
+    end);
+    return UI.CBX_Combat --print("4.5-CheckBox Constructor: Loaded");
+end
+
+
+
+
 
 ------------------------------------------------------------------------------
 -- Check Box Label
@@ -116,32 +129,42 @@ end
 ------------------------------------------------------------------------------
 -- Create Main Menu Item Functions
 ------------------------------------------------------------------------------
+GDDM_DB_OPTIONS = GDDM_DB_OPTIONS or {}
 
 local f = CreateFrame("FRAME")
 f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", function(self, event, arg1, ...)
     if event == "ADDON_LOADED" and arg1 == addonName then
-
-        if GTTM_DB["popup_state"] == true then print(arg1 .. ": " .. "Core Loaded") end
-
+        
+        GDDM_DB_OPTIONS.INIT = GDDM_DB_OPTIONS.INIT or {}
+        GDDM_DB_OPTIONS.INIT = GetTime()
+      
         -- Creates the menu--
         UI = C:CreateMenu(200, 250, 0, 0)
         MenuTitle = C:CreateMenuTitle(UI, "Gottem - Settings")
 
         -- Create Buttons --
         BTN1 = C:CreateButton1(0,-35)
-        BTN2 = C:CreateButton2(0, -10)
+
         
         -- checkbox--
-        CBX_Enable = C:CreateCheckBox1()
-        CBX_Enable_Label = C:CreateCheckBoxLabel(UI.CBX_Enable_Label, "Enable", CBX_Enable)
+        CBX_NPC = C:CreateCheckBox1()
+        CBX_NPC_Label = C:CreateCheckBoxLabel(UI.CBX_NPC_Label, "NPCS", CBX_NPC)
         
 
-        CBX_popup_state = C:CreateCheckBox2()
-        CBX_popup_state_Label = C:CreateCheckBoxLabel(UI.CBX_popup_state_Label, "popup_state Mode", CBX_popup_state)
+        CBX_ANIMALS = C:CreateCheckBox2()
+        CBX_ANIMALS_Label = C:CreateCheckBoxLabel(UI.CBX_Animal_Label, "Animals", CBX_ANIMALS)
+
+        CBX_COMBAT = C:CreateCheckBox3()
+        CBX_COMBAT_LABEL = C:CreateCheckBoxLabel(UI.CBX_Animal_Label, "Combat", CBX_COMBAT)
+
     end
 end)
 
+
+------------------------------------------------------------------------------
+-- Message Box area
+------------------------------------------------------------------------------
 
 local previousWindow
 
@@ -195,13 +218,6 @@ function C:HideMessage()
 end
 
 
-
-
-
-
-
-
-
 ------------------------------------------------------------------------------
 -- Script Functions
 ------------------------------------------------------------------------------
@@ -215,8 +231,6 @@ end
 function C:MSG_hide()
     MW:Hide()
 end
-
-
 
 
 -- adds us to the special boy club so we can use escape

@@ -7,9 +7,11 @@ G.messagePrefix = "sneak_right_past_ya_there"
 
 local MyFullName
 
-GTTM_DB = GTTM_DB or {}
-
-GTTM_DB.Timer = GTTM_DB.Timer or {}
+GDDM_DB_MSG = GDDM_DB_MSG or {}
+GDDM_DB_OPTIONS = GDDM_DB_OPTIONS or {}
+GDDM_DB_OPTIONS.NPC = GDDM_DB_OPTIONS.NPC or {}
+GDDM_DB_OPTIONS.Combat = GDDM_DB_OPTIONS.Combat or {}
+GDDM_DB_OPTIONS.Animals = GDDM_DB_OPTIONS.Animals or {}
 
 SLASH_ZGG1 = "/gottem"
 SlashCmdList["ZGG"] = function() C_ChatInfo.SendAddonMessage(G.triggerPrefix, "go", "GUILD") end;
@@ -32,11 +34,10 @@ f:SetScript("OnEvent", function(self, event, arg1, arg2, _, arg4,...)
         Verify_Store()
     elseif
         event == "CHAT_MSG_ADDON" and arg1 == G.triggerPrefix and arg2 ~= "go" then
-            GTTM_DB.History = GTTM_DB.History or {}
+        GDDM_DB_MSG.History = GDDM_DB_MSG.History or {}
             G:MakeMessageWindow() 
-            G:MakeText(MsgString)       
-            GTTM_DB.Timer = GetTime()                       
-            table.insert(GTTM_DB.History, {GetUnitName("Player"),MsgString})     
+            G:MakeText(MsgString)                          
+        table.insert(GDDM_DB_MSG.History, { GetUnitName("Player"), MsgString })
     end
         
 end)
@@ -58,14 +59,24 @@ function Verify_Store()
             end
         else
             local thing = UnitCreatureFamily("target")
-            if thing == nil then                
-                MsgString = GetUnitName("Player").." found the elusive NPC; "..tostring(X).."..."
-                C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
-                return
-            else               
-                MsgString = "Idiot "..GetUnitName("player") .." found a "..tostring(thing).." instead..."
-                C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
-                return
+            if thing == nil then
+                if GDDM_DB_OPTIONS["NPC"] == true then           
+                    MsgString = GetUnitName("Player").." found the elusive NPC; "..tostring(X).."..."
+                    C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
+                    return
+                else
+                    print("That is an NPC")
+                    return
+                end
+            else
+                if GDDM_DB_OPTIONS["Animals"] == true then     
+                        MsgString = "Idiot "..GetUnitName("player") .." found a "..tostring(thing).." instead..."
+                        C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
+                    return
+                else
+                    print("Thats some kind of bird")
+                    return
+                end
             end
         end
     end
@@ -96,6 +107,4 @@ function Verify_Store()
     --print(G.Result, G.locName, G.locX, G.locY)
     MsgString = tostring(X).." found at "..tostring(G.locX)..", "..tostring(G.locY).." in "..tostring(G.locName).."\n"
     C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
-    
-
 end

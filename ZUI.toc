@@ -2,14 +2,13 @@
 ## Title: ZUI
 ## Author: FancyPantsy
 ## Version: 1.0
-## DefaultState: enabled
-## SavedVariables: ZUI_MYTHIC_DB, ZUI_GOTTEM
+## Defaultin_combat: enabled
+## SavedVariables: GTTM_DB
 
 init.lua
 list.lua
 messager.lua
 core.lua
-
 
 
 

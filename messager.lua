@@ -7,8 +7,14 @@ G.messagePrefix = "sneak_right_past_ya_there"
 
 local MyFullName
 
+GTTM_DB = GTTM_DB or {}
+
+GTTM_DB.Timer = GTTM_DB.Timer or {}
+
 SLASH_ZGG1 = "/gottem"
 SlashCmdList["ZGG"] = function() C_ChatInfo.SendAddonMessage(G.triggerPrefix, "go", "GUILD") end;
+
+
 
 local f = CreateFrame("FRAME")
 f:RegisterEvent("ADDON_LOADED")
@@ -26,9 +32,17 @@ f:SetScript("OnEvent", function(self, event, arg1, arg2, _, arg4,...)
         Verify_Store()
     elseif
         event == "CHAT_MSG_ADDON" and arg1 == G.triggerPrefix and arg2 ~= "go" then
-        message(arg2)
+            GTTM_DB.History = GTTM_DB.History or {}
+            G:MakeMessageWindow() 
+            G:MakeText(MsgString)       
+            GTTM_DB.Timer = GetTime()                       
+            table.insert(GTTM_DB.History, {GetUnitName("Player"),MsgString})     
     end
+        
 end)
+
+
+
 
 function Verify_Store()
     local X = GetUnitName("Target")
@@ -44,11 +58,13 @@ function Verify_Store()
             end
         else
             local thing = UnitCreatureFamily("target")
-            if thing == nil then
-                print("That is an NPC named "..X.."...")
+            if thing == nil then                
+                MsgString = GetUnitName("Player").." found the elusive NPC; "..tostring(X).."..."
+                C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
                 return
-            else
-                print("Great, you found a " .. tostring(thing) .. ", you idiot!")
+            else               
+                MsgString = "Idiot "..GetUnitName("player") .." found a "..tostring(thing).." instead..."
+                C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
                 return
             end
         end
@@ -75,8 +91,11 @@ function Verify_Store()
         G.locName = GetMinimapZoneText()..", "..GetZoneText()
     end
 
-    print(G.Result, G.locName, G.locX, G.locY)
-    local msgString = tostring(X).." found at "..tostring(G.locX)..", "..tostring(G.locY).." in "..tostring(G.locName)
-    C_ChatInfo.SendAddonMessage(G.triggerPrefix, msgString, "GUILD")
+
+
+    --print(G.Result, G.locName, G.locX, G.locY)
+    MsgString = tostring(X).." found at "..tostring(G.locX)..", "..tostring(G.locY).." in "..tostring(G.locName).."\n"
+    C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
+    
 
 end

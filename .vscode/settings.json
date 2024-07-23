@@ -28,7 +28,26 @@
         "CHAT_MSG_SAY",
         "SELECTED_CHAT_FRAME",
         "TARGET",
-        "CONTINUE"
+        "CONTINUE",
+        "SearchBoxTemplate_OnTextChanged",
+        "SetItemRef",
+        "FrameUtil",
+        "GENERIC_FRACTION_STRING",
+        "AnchorUtil",
+        "HIGHLIGHT_FONT_COLOR",
+        "GetGroupMemberCountsForDisplay",
+        "DISABLED_FONT_COLOR",
+        "GREEN_FONT_COLOR",
+        "YELLOW_FONT_COLOR",
+        "GameTooltip_SetTitle",
+        "CreateFramePool",
+        "RED_FONT_COLOR",
+        "HandleModifiedItemClick",
+        "GameTooltip_AddNormalLine",
+        "CreateFontStringPool",
+        "GridLayoutMixin",
+        "DEFAULT_CHAT_FRAME",
+        "ChatFrame1Tab"
     ],
     "editor.inlineSuggest.enabled": false
 

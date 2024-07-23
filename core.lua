@@ -8,7 +8,6 @@ local C = core.C;
 ------------------------------------------------------------------------------
 -- Slash Commands
 ------------------------------------------------------------------------------
-
 SLASH_RELOADUI1 = "/rl"
 SlashCmdList.RELOADUI = ReloadUI
 
@@ -29,7 +28,7 @@ function C:CreateMenu(menuWidth,menuHeight, menuPosX, meniPoxY)
     UI:RegisterForDrag("LeftButton");
     UI:SetScript("OnDragStart", function(self) self:StartMoving() end);
     UI:Hide();
-    return UI --print("1-Menu Consturcor: Loaded")
+    return UI 
 end
 
 ------------------------------------------------------------------------------
@@ -41,13 +40,12 @@ function C:CreateMenuTitle(UI, titleName)
     UI.title:SetFontObject("GameFontNormal");
     UI.title:SetPoint("LEFT", UI.TitleBg, "LEFT", 5, 0);
     UI.title:SetText(titleName);
-    return UI.title --print("2-Menu Title Constructor: Loaded")
+    return UI.title 
 end
 
 ------------------------------------------------------------------------------
 -- Button
 ------------------------------------------------------------------------------
-
 function C:CreateButton1(xOffset, yOffset)
     UI.BTN_PartyInfo = CreateFrame("Button", nil, UI, "UIPanelButtonTemplate");
     UI.BTN_PartyInfo:SetPoint("TOP", UI, "TOP", xOffset, yOffset);
@@ -59,7 +57,7 @@ function C:CreateButton1(xOffset, yOffset)
     return UI.BTN_PartyInfo --print("3-Button Constructor: Loaded")
 end
 
-function C:CreateButton2(xOffset, yOffset)
+function C:CreateButton2(xOffset, yOffset) -- Unused
     UI.BTN_Test = CreateFrame("Button", nil, UI, "UIPanelButtonTemplate");
     UI.BTN_Test:SetPoint("TOP", UI.BTN_PartyInfo, "BOTTOM", xOffset, yOffset);
     UI.BTN_Test:SetSize(140, 40);
@@ -71,19 +69,18 @@ function C:CreateButton2(xOffset, yOffset)
 end
 
 ------------------------------------------------------------------------------
--- Check Box
+-- NPC Checkbox
 ------------------------------------------------------------------------------
-
-function C:CreateCheckBox1() -- NPCs
+function C:CreateCheckBox1()
     UI.CBX_NPC = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");
     UI.CBX_NPC:SetPoint("TOPLEFT", BTN1, "BOTTOMLEFT", -3, -10);
-    ---@diagnostic disable-next-line:param-type-mismatch
+    ---@diagnostic disable-next-line:param-type-mismatch --
     UI.CBX_NPC:SetChecked(GDDM_DB_OPTIONS["NPC"]);
     UI.CBX_NPC:SetScript("OnClick", function(self)        
         GDDM_DB_OPTIONS.NPC = self:GetChecked();
         print("NPCs", GDDM_DB_OPTIONS.NPC)
     end);
-    return UI.CBX_NPC --print("4-CheckBox Constructor: Loaded");
+    return UI.CBX_NPC 
 end
 
 function C:CreateCheckBox2() -- Animals
@@ -109,9 +106,6 @@ function C:CreateCheckBox3() -- Combat
     end);
     return UI.CBX_Combat --print("4.5-CheckBox Constructor: Loaded");
 end
-
-
-
 
 
 ------------------------------------------------------------------------------

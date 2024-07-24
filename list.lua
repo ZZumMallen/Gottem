@@ -37,6 +37,25 @@ L.tList = {
     "madys",
     "manimal",
     "Jacobcats",
-    "Brownnote"
+    "Brownnote",
+    "Hogslammer",
+    "Nanosmitten",
+    "Tinkr",
+    "Pirouette",
+    "Mouse",
+    "Sinestroo",
+    "Vacca",
+    "Bailbean",
+    "Sunfeather",
+    "Adrelia",
+    "Bubbleôseven",
+    "Flauris",
+    "Umalinn",
+    "Floweret",
+    "Glõpanx",
+    "Naril",
+    "Cabe",
+    "Roshana"
+
 }
 

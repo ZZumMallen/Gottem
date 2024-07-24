@@ -34,9 +34,10 @@ f:SetScript("OnEvent", function(self, event, arg1, arg2, _, arg4,...)
         Verify_Store()
     elseif
         event == "CHAT_MSG_ADDON" and arg1 == G.triggerPrefix and arg2 ~= "go" then
-        GDDM_DB_MSG.History = GDDM_DB_MSG.History or {}
+        GDDM_DB_MSG.History = GDDM_DB_MSG.History or {}            
             G:MakeMessageWindow() 
-            G:MakeText(MsgString)                          
+            G:MakeText(MsgString)
+            G:MakeWindowCloser()                       
         table.insert(GDDM_DB_MSG.History, { GetUnitName("Player"), MsgString })
     end
         
@@ -47,6 +48,8 @@ end)
 
 function Verify_Store()
     local X = GetUnitName("Target")
+    local red = "|cFFFF0000"
+    local reset = "|r"
     if X == nil then
         G.Result = print("you need to target something")
         return
@@ -61,7 +64,7 @@ function Verify_Store()
             local thing = UnitCreatureFamily("target")
             if thing == nil then
                 if GDDM_DB_OPTIONS["NPC"] == true then           
-                    MsgString = GetUnitName("Player").." found the elusive NPC; "..tostring(X).."..."
+                    MsgString = red..tostring(X)..reset.." found the elusive NPC; "..tostring(X).."..."
                     C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
                     return
                 else
@@ -70,7 +73,7 @@ function Verify_Store()
                 end
             else
                 if GDDM_DB_OPTIONS["Animals"] == true then     
-                        MsgString = "Idiot "..GetUnitName("player") .." found a "..tostring(thing).." instead..."
+                        MsgString = "Idiot "..red..GetUnitName("player")..reset.." found a "..tostring(thing).." instead..."
                         C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
                     return
                 else
@@ -102,9 +105,12 @@ function Verify_Store()
         G.locName = GetMinimapZoneText()..", "..GetZoneText()
     end
 
-
+    local red = "|cFFFF0000"
+    local reset = "|r"
+    --MsgString = red..tostring(X)..reset
 
     --print(G.Result, G.locName, G.locX, G.locY)
-    MsgString = tostring(X).." found at "..tostring(G.locX)..", "..tostring(G.locY).." in "..tostring(G.locName).."\n"
+    MsgString = red..tostring(X)..reset.." found at "..tostring(G.locX)..", "..tostring(G.locY).." in "..tostring(G.locName).."\n"
     C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
+    
 end

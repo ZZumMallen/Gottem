@@ -24,14 +24,8 @@ Second I like to make dumb stuff to make my friends laugh so I have included a r
 - [ ] Enable/Disable Gottem
 
 ## Gottem
-- [ ] Remove party3 table from savedvars
 - [ ] Fix list
 
-# What have I crossed off the list?
-- [x] make main window movable
-- [x] save main window position
-- [x] added checkbox and textfram to settings window
-- [x] Callback handler for the addon chat
 
 > [!CAUTION]
 > Evil Follows

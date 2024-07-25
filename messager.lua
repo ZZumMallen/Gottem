@@ -18,21 +18,23 @@ GDDM_DB_MSG.History = GDDM_DB_MSG.History or {}
 SLASH_ZGG1 = "/gottem"
 SlashCmdList["ZGG"] = function() C_ChatInfo.SendAddonMessage(G.triggerPrefix, "go", "GUILD") end;
 
+
+
 local f = CreateFrame("FRAME")
 f:RegisterEvent("ADDON_LOADED")
 f:RegisterEvent("CHAT_MSG_ADDON")
 f:SetScript("OnEvent", function(self, event, arg1, arg2, _, arg4,...)
-
+    print(addonName)
     ---------------------------------------------------------
     -- Check for Addon Loaded
     ---------------------------------------------------------4
     if event == "ADDON_LOADED" and arg1 == addonName then        
         C_ChatInfo.RegisterAddonMessagePrefix(G.triggerPrefix)
-            -------------------------------------
-            local name = GetUnitName("player")
-            local realm = GetRealmName()
-            MyFullName = name .. "-" .. realm
-            -------------------------------------
+            -- -------------------------------------
+            -- local name = GetUnitName("player")
+            -- local realm = GetRealmName()
+            -- MyFullName = name .. "-" .. realm
+            -- -------------------------------------
         print("Addon Load Success: Messager")
     else
         print("Addon Load Fail: Messager")

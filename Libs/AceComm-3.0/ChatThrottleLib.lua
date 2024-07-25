@@ -21,7 +21,7 @@
 -- Can run as a standalone addon also, but, really, just embed it! :-)
 --
 -- LICENSE: ChatThrottleLib is released into the Public Domain
----@diagnostic disable
+--
 
 local CTL_VERSION = 29
 

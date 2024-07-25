@@ -50,7 +50,7 @@ function C:CreateButton1(xOffset, yOffset)
     UI.BTN_PartyInfo = CreateFrame("Button", nil, UI, "UIPanelButtonTemplate");
     UI.BTN_PartyInfo:SetPoint("TOP", UI, "TOP", xOffset, yOffset);
     UI.BTN_PartyInfo:SetSize(140, 40);
-    UI.BTN_PartyInfo:SetText("Party Info");
+    UI.BTN_PartyInfo:SetText("I do nothing");
     UI.BTN_PartyInfo:SetNormalFontObject("GameFontNormal");
     UI.BTN_PartyInfo:SetHighlightFontObject("GameFontHighlight");
     UI.BTN_PartyInfo:SetScript("OnMouseDown", function() print("Party function placeholder") end)

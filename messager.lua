@@ -28,13 +28,16 @@ f:SetScript("OnEvent", function(self, event, arg1, arg2, _, arg4,...)
         local realm = GetRealmName()
         MyFullName = name .. "-" .. realm
         print("Messager Loaded")
-    elseif
-        event == "CHAT_MSG_ADDON" and arg1 == G.triggerPrefix and arg2 == "go" and arg4 == MyFullName then
+    end
+        if event == "CHAT_MSG_ADDON" and arg1 == G.triggerPrefix and arg2 == "go" and arg4 == MyFullName then
         C_ChatInfo.RegisterAddonMessagePrefix(G.triggerPrefix)
         Verify_Store()
+        MsgStringSend = red..arg4..reset.." found at "..tostring(G.locX)..", "..tostring(G.locY).." in "..tostring(G.locName).."\n"
+        Package = C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgStringSend, "GUILD")
     elseif
-        event == "CHAT_MSG_ADDON" and arg1 == G.triggerPrefix and arg2 ~= "go" then
-        GDDM_DB_MSG.History = GDDM_DB_MSG.History or {}            
+        event == "CHAT_MSG_ADDON" and arg1 == G.triggerPrefix and arg4 ~= MyFullName then
+        GDDM_DB_MSG.History = GDDM_DB_MSG.History or {} 
+       
             G:MakeMessageWindow() 
             G:MakeText(MsgString)
             G:MakeWindowCloser()                       
@@ -110,7 +113,12 @@ function Verify_Store()
     --MsgString = red..tostring(X)..reset
 
     --print(G.Result, G.locName, G.locX, G.locY)
-    MsgString = red..tostring(X)..reset.." found at "..tostring(G.locX)..", "..tostring(G.locY).." in "..tostring(G.locName).."\n"
-    C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
     
+    
+       
+   
+        
+    
+    MsgStringReceived = red..tostring(X)..reset.." found at "..tostring(G.locX)..", "..tostring(G.locY).." in "..tostring(G.locName).."\n"
+    Package = C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgStringReceived, "GUILD")
 end

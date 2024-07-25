@@ -5,6 +5,13 @@ Second I like to make dumb stuff to make my friends laugh so I have included a r
 - I am learning to make addons by creating dumb things to make people laugh
 - This is also a cheap hyperfixation
 
+# How do I use it?
+- Target someone and use the slash command /gottem
+- Access some meager options with /zui
+
+> [!CAUTION]
+> There is not throttling apam control... Use at your own risk
+
 # When will it be ready?
 > [!WARNING] 
 >I have a poor track record of finishing dumb > projects like this

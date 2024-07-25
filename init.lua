@@ -1,4 +1,4 @@
 local _, core = ...
-_G["ZUI"] = core
+_G["zGottem"] = core
 core.C = {}
 

@@ -25,7 +25,7 @@ f:SetScript("OnEvent", function(self, event, arg1, arg2, _, arg4,...)
 
     ---------------------------------------------------------
     -- Check for Addon Loaded
-    ---------------------------------------------------------
+    ---------------------------------------------------------4
     if event == "ADDON_LOADED" and arg1 == addonName then        
         C_ChatInfo.RegisterAddonMessagePrefix(G.triggerPrefix)
             -------------------------------------
@@ -46,7 +46,7 @@ f:SetScript("OnEvent", function(self, event, arg1, arg2, _, arg4,...)
     if event == "CHAT_MSG_ADDON" and arg1 == G.sendMessagePrefix and arg2 == "go" and arg4 == MyFullName then
         
         Verify_Target_In_List()
-        local sendPackage = C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgStringReceived, "GUILD")
+        local sendPackage = C_ChatInfo.SendAddonMessage(G.triggerPrefix, 'MsgStringReceived', "GUILD")
 
  
     elseif
@@ -61,7 +61,7 @@ f:SetScript("OnEvent", function(self, event, arg1, arg2, _, arg4,...)
         
 end)
 
-table.insert(GDDM_DB_MSG.History, { GetUnitName("Player"), MsgString })
+table.insert(GDDM_DB_MSG.History, { GetUnitName("Player"), 'MsgString' })
 
 
 function Verify_Target_In_List()

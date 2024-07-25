@@ -11,7 +11,7 @@ local C = core.C;
 SLASH_RELOADUI1 = "/rl"
 SlashCmdList.RELOADUI = ReloadUI
 
-SLASH_ZUI1 = "/zui"
+SLASH_ZGT1 = "/zgt"
 SlashCmdList[addonName] = function() C:Toggle() end;
 
 

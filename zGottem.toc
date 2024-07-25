@@ -1,5 +1,5 @@
-## Interface: 100207
-## Title: ZUI
+## Interface: 110000
+## Title: zGottem
 ## Author: FancyPantsy
 ## Version: 1.0
 ## Defaultin_combat: enabled

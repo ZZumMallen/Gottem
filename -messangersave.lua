@@ -14,7 +14,7 @@ GDDM_DB_OPTIONS.Combat = GDDM_DB_OPTIONS.Combat or {}
 GDDM_DB_OPTIONS.Animals = GDDM_DB_OPTIONS.Animals or {}
 
 SLASH_ZGG1 = "/gottem"
-SlashCmdList["ZGG"] = function() C_ChatInfo.SendAddonMessage(G.triggerPrefix, "go", "GUILD") end;
+--SlashCmdList["ZGG"] = function() C_ChatInfo.SendAddonMessage(G.triggerPrefix, "go", "GUILD") end;
 
 
 

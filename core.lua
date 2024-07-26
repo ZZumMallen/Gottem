@@ -2,8 +2,8 @@
 ---@diagnostic disable: inject-field
 
 local addonName, core = ...;
-local C = core.C;
-
+local C = core.A;
+local file = core
 
 ------------------------------------------------------------------------------
 -- Slash Commands
@@ -11,8 +11,8 @@ local C = core.C;
 SLASH_RELOADUI1 = "/rl"
 SlashCmdList.RELOADUI = ReloadUI
 
-SLASH_ZGT1 = "/zgt"
-SlashCmdList[addonName] = function() C:Toggle() end;
+SLASH_ZUI1 = "/zui"
+SlashCmdList["ZUI"] = function() C:Toggle() end;
 
 
 ------------------------------------------------------------------------------
@@ -57,16 +57,16 @@ function C:CreateButton1(xOffset, yOffset)
     return UI.BTN_PartyInfo --print("3-Button Constructor: Loaded")
 end
 
-function C:CreateButton2(xOffset, yOffset) -- Unused
-    UI.BTN_Test = CreateFrame("Button", nil, UI, "UIPanelButtonTemplate");
-    UI.BTN_Test:SetPoint("TOP", UI.BTN_PartyInfo, "BOTTOM", xOffset, yOffset);
-    UI.BTN_Test:SetSize(140, 40);
-    UI.BTN_Test:SetText("Test");
-    UI.BTN_Test:SetNormalFontObject("GameFontNormal");
-    UI.BTN_Test:SetHighlightFontObject("GameFontHighlight");
-    UI.BTN_Test:SetScript("OnMouseDown", function() print("Test function placeholder") end)
-    return UI.BTN_Test --print("3-Button Constructor: Loaded")
-end
+-- function C:CreateButton2(xOffset, yOffset) -- Unused
+--     UI.BTN_Test = CreateFrame("Button", nil, UI, "UIPanelButtonTemplate");
+--     UI.BTN_Test:SetPoint("TOP", UI.BTN_PartyInfo, "BOTTOM", xOffset, yOffset);
+--     UI.BTN_Test:SetSize(140, 40);
+--     UI.BTN_Test:SetText("Test");
+--     UI.BTN_Test:SetNormalFontObject("GameFontNormal");
+--     UI.BTN_Test:SetHighlightFontObject("GameFontHighlight");
+--     UI.BTN_Test:SetScript("OnMouseDown", function() print("Test function placeholder") end)
+--     return UI.BTN_Test --print("3-Button Constructor: Loaded")
+-- end
 
 ------------------------------------------------------------------------------
 -- NPC Checkbox
@@ -95,16 +95,16 @@ function C:CreateCheckBox2() -- Animals
     return UI.CBX_Animal --print("4.5-CheckBox Constructor: Loaded");
 end
 
-function C:CreateCheckBox3() -- Combat
-    UI.CBX_Combat = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");
-    UI.CBX_Combat:SetPoint("TOPLEFT", CBX_ANIMALS, "BOTTOMLEFT", -0, -10);
+function C:CreateCheckBox3() -- Debug
+    UI.CBX_Debug = CreateFrame("CheckButton", nil, UI, "UICheckButtonTemplate");
+    UI.CBX_Debug:SetPoint("TOPLEFT", CBX_ANIMALS, "BOTTOMLEFT", -0, -10);
     ---@diagnostic disable-next-line:param-type-mismatch
-    UI.CBX_Combat:SetChecked(GDDM_DB_OPTIONS["Combat"]);
-    UI.CBX_Combat:SetScript("OnClick", function(self)        
-        GDDM_DB_OPTIONS.Combat = self:GetChecked();
-        print("Combat", GDDM_DB_OPTIONS.Combat) 
+    UI.CBX_Debug:SetChecked(GDDM_DB_OPTIONS["Debug"]);
+    UI.CBX_Debug:SetScript("OnClick", function(self)
+        GDDM_DB_OPTIONS.Debug = self:GetChecked();
+        print("Debug", GDDM_DB_OPTIONS.Debug)
     end);
-    return UI.CBX_Combat --print("4.5-CheckBox Constructor: Loaded");
+    return UI.CBX_Debug --print("4.5-CheckBox Constructor: Loaded");
 end
 
 
@@ -149,11 +149,15 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
         CBX_ANIMALS = C:CreateCheckBox2()
         CBX_ANIMALS_Label = C:CreateCheckBoxLabel(UI.CBX_Animal_Label, "Animals", CBX_ANIMALS)
 
-        CBX_COMBAT = C:CreateCheckBox3()
-        CBX_COMBAT_LABEL = C:CreateCheckBoxLabel(UI.CBX_Animal_Label, "Combat", CBX_COMBAT)
+        CBX_DEBUG = C:CreateCheckBox3()
+        CBX_DEBUG_LABEL = C:CreateCheckBoxLabel(UI.CBX_Debug_Label, "Debug", CBX_DEBUG) -- attachesd to box on previous line
 
     end
 end)
+
+
+
+
 
 
 ------------------------------------------------------------------------------

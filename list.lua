@@ -1,6 +1,6 @@
 ---@diagnostic disable: undefined-field
 local addonName, core = ...;
-local L = core.C
+local L = core.A
 
 local h = CreateFrame("Frame")
 h:RegisterEvent("ADDON_LOADED")

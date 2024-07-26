@@ -4,15 +4,15 @@
 ## Version: 1.0
 ## Defaultin_combat: enabled
 ## SavedVariables: GDDM_DB_OPTIONS, GDDM_DB_MSG
-
+## OptionalDeps: Ace3
 
 embeds.xml
-
 
 init.lua
 list.lua
 messager.lua
-core.lua
+
+
 
 
 

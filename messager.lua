@@ -14,21 +14,26 @@ GDDM_DB_OPTIONS.Animals = GDDM_DB_OPTIONS.Animals or {}
 GDDM_DB_MSG.History = GDDM_DB_MSG.History or {}
 
 
-local AceComm = LibStub("AceComm-3.0")
+
+LibStub("AceComm-3.0"):Embed(G)
 local Callback = LibStub("CallbackHandler-1.0")
 
-local playerName = GetUnitName("Player")
+-- local unit, realm = UnitFullName("Player")
+-- local playerName = tostring(unit) .. "-" .. tostring(realm)
+
+local playerName = UnitName("Player")
+
+GDDM_MY_INFO.ME = playerName
 
 SLASH_GOTTEM1 = "/gottem"
 SlashCmdList["GOTTEM"] = function() Verify_Target_In_List() end;
-
-
 
 local f = CreateFrame("FRAME")
 f:RegisterEvent("ADDON_LOADED")
 f:RegisterEvent("CHAT_MSG_ADDON")
 f:SetScript("OnEvent", function(self, event, arg1, ...)      
     if event == "ADDON_LOADED" and arg1 == addonName then
+        G:RegisterComm(G.sendPrefix)
         if GDDM_DB_OPTIONS.Debug == true then
             print("Addon Loaded")
         end
@@ -53,72 +58,23 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
             end
         end
 
-        function G.GetInfo(X)
-            local set_red_color = "|cFFFF0000"
-            local reset_color = "|r"
-
-            ---@class mapID:number
-            local mapID = C_Map.GetBestMapForUnit(X)
-            local pos = C_Map.GetPlayerMapPosition(mapID, X);
-
-            if pos == nil then
-                ---@class locX:number
-                ---@class locY:number
-                G.locX = 0
-                G.locY = 0
-                return
-            else
-                ---@class locX:number
-                ---@class locY:number
-                G.locX = math.ceil(pos.x * 10000) / 100
-                G.locY = math.ceil(pos.y * 10000) / 100
-            end
-
-            if GetZoneText() == GetMinimapZoneText() then
-                ---@type string
-                G.locName = GetZoneText()
-            else
-                ---@type string
-                G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
-            end
-
-            G.In_List_Msg = set_red_color .. tostring(X) .. reset_color ..
-                " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName)
-        end
-
-        function G.GetBasic(X)
-            local set_red_color = "|cFFFF0000"
-            local reset_color = "|r"
-
-            if GetZoneText() == GetMinimapZoneText() then
-                ---@type string
-                G.locName = GetZoneText()
-            else
-                ---@type string
-                G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
-            end
-
-            G.Not_In_List_Msg = set_red_color ..
-            UnitName("player") .. reset_color .. ", found some guy named " .. GetUnitName("Target") .. ". Almost!"
-
-            G.NPC_Msg = set_red_color ..
-            UnitName("player") .. reset_color .. ", found an NPC named " .. GetUnitName("Target") .. ". Close Buddy!"
-
-            G.Animal_Msg = set_red_color .. UnitName("player") .. reset_color .. "found a wild " .. GetUnitName("Target")
-        end
-
         SentTime = GetTime()
         GDDM_DB_OPTIONS.INIT = SentTime
 
-    elseif 
-        event == "CHAT_MESSAGE_ADDON" then
-        local prefix, message, channel, sender = ...
-        if sender ~= playerName and prefix ~= G.Triggerprefix then
-            G.OnCommReceived(prefix, message, channel, sender)
-        end
+    elseif     
+        event == "CHAT_MESSAGE_ADDON" then            
+            G.OnCommReceived()
     end
+  
 end)
 
+function G.OnCommReceived(_, prefix, message, channel, sender)
+    if prefix == G.sendPrefix and sender ~= GDDM_MY_INFO.ME then
+        print(message)
+    else
+        print("Time to recycle")
+    end
+end
 
 -------------------------------------------------------------
 -- Checks
@@ -146,7 +102,7 @@ function InList(X) -- checks if the target is in the DB
                  print("InList: True")
             end
             G.GetInfo(X)
-            AceComm:SendCommMessage(G.sendPrefix,G.In_List_Msg,"Guild")
+            G:SendCommMessage(G.sendPrefix,G.In_List_Msg,"Guild")
             return true
         end
     end
@@ -164,7 +120,7 @@ function IsPlayerCharacter(T,X) -- is it a player-character
             print("IsPlayer: true")
         end
         G.GetBasic(X)
-        AceComm:SendCommMessage(G.sendPrefix, G.Not_In_List_Msg, "Guild")
+        G:SendCommMessage(G.sendPrefix, G.Not_In_List_Msg, "Guild")
         return true
     else
         if GDDM_DB_OPTIONS.Debug == true then
@@ -180,26 +136,75 @@ function WhatIsIt(X)
             print("Non-Creature found: "..UnitName("Target"))
         end
         G.GetBasic(X)
-        AceComm:SendCommMessage(G.sendPrefix, G.NPC_Msg, "Guild")
+        G:SendCommMessage(G.sendPrefix, G.NPC_Msg, "Guild")
         return true
     else
         if GDDM_DB_OPTIONS.Debug == true then
             print("Creature found: "..UnitCreatureFamily("Target"))
         end
         G.GetBasic(X)
-        AceComm:SendCommMessage(G.sendPrefix, G.Animal_Msg, "Guild")
+        G:SendCommMessage(G.sendPrefix, G.Animal_Msg, "Guild")
         return true 
     end
 end
 
 
 -------------------------------------------------------------
--- Funkytown
+-- Funkytown - G. GetInfo & GetBasic
 -------------------------------------------------------------
-function G.OnCommReceived(prefix, message, distribution, sender)
-    if prefix == G.triggerprefix then
-        print(message, sender)
+
+function G.GetInfo(X)
+    local set_red_color = "|cFFFF0000"
+    local reset_color = "|r"
+
+    ---@class mapID:number
+    local mapID = C_Map.GetBestMapForUnit(X)
+    local pos = C_Map.GetPlayerMapPosition(mapID, X);
+
+    if pos == nil then
+        ---@class locX:number
+        ---@class locY:number
+        G.locX = 0
+        G.locY = 0
+        return
+    else
+        ---@class locX:number
+        ---@class locY:number
+        G.locX = math.ceil(pos.x * 10000) / 100
+        G.locY = math.ceil(pos.y * 10000) / 100
     end
+
+    if GetZoneText() == GetMinimapZoneText() then
+        ---@type string
+        G.locName = GetZoneText()
+    else
+        ---@type string
+        G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
+    end
+
+    G.In_List_Msg = set_red_color .. tostring(X) .. reset_color ..
+        " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName)
+end
+
+function G.GetBasic(X)
+    local set_red_color = "|cFFFF0000"
+    local reset_color = "|r"
+
+    if GetZoneText() == GetMinimapZoneText() then
+        ---@type string
+        G.locName = GetZoneText()
+    else
+        ---@type string
+        G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
+    end
+
+    G.Not_In_List_Msg = set_red_color ..
+        UnitName("player") .. reset_color .. ", found some guy named " .. GetUnitName("Target") .. ". Almost!"
+
+    G.NPC_Msg = set_red_color ..
+        UnitName("player") .. reset_color .. ", found an NPC named " .. GetUnitName("Target") .. ". Close Buddy!"
+
+    G.Animal_Msg = set_red_color .. UnitName("player") .. reset_color .. "found a wild " .. GetUnitName("Target")
 end
 
 
@@ -214,9 +219,10 @@ end
 
 
 
-
-
-
+-- 
+-- 
+--     print(prefix, message, channel, sender, playerName)
+-- end
 
 
 
@@ -229,9 +235,9 @@ end
 --     local messageString = set_red_color .. tostring(X) .. reset_color ..
 --         " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName) .. "\n"
 
---     print("acecomm Message goes here")
+--     print("G Message goes here")
 
---     --AceComm:SendCommMessage(G.SendPrefix, messageString, "GUILD", nil)
+--     --G:SendCommMessage(G.SendPrefix, messageString, "GUILD", nil)
 
 
 

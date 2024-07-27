@@ -17,6 +17,8 @@ GDDM_DB_MSG.History = GDDM_DB_MSG.History or {}
 local AceComm = LibStub("AceComm-3.0")
 local Callback = LibStub("CallbackHandler-1.0")
 
+local playerName = GetUnitName("Player")
+
 SLASH_GOTTEM1 = "/gottem"
 SlashCmdList["GOTTEM"] = function() Verify_Target_In_List() end;
 
@@ -38,8 +40,6 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
             if IsNil(X) then -- stops the party if nothing is targetted
                 return
             end
-
-            
 
             if InList(X) then                 
                 return
@@ -84,14 +84,6 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
 
             G.In_List_Msg = set_red_color .. tostring(X) .. reset_color ..
                 " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName)
-
-            G.Not_In_List_Msg = set_red_color ..
-            UnitName("player") .. reset_color .. ", found some guy named " .. GetUnitName("Target") .. ". Almost!"
-
-            G.NPC_Msg = set_red_color ..
-            UnitName("player") .. reset_color .. ", found an NPC named " .. GetUnitName("Target") .. ". Close Buddy!"
-
-            G.Animal_Msg = set_red_color .. UnitName("player") .. reset_color .. "found a wild " .. GetUnitName("Target")
         end
 
         function G.GetBasic(X)
@@ -106,9 +98,6 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
                 G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
             end
 
-            G.In_List_Msg = set_red_color .. tostring(X) .. reset_color ..
-                " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName)
-
             G.Not_In_List_Msg = set_red_color ..
             UnitName("player") .. reset_color .. ", found some guy named " .. GetUnitName("Target") .. ". Almost!"
 
@@ -121,6 +110,12 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
         SentTime = GetTime()
         GDDM_DB_OPTIONS.INIT = SentTime
 
+    elseif 
+        event == "CHAT_MESSAGE_ADDON" then
+        local prefix, message, channel, sender = ...
+        if sender ~= playerName and prefix ~= G.Triggerprefix then
+            G.OnCommReceived(prefix, message, channel, sender)
+        end
     end
 end)
 
@@ -128,7 +123,6 @@ end)
 -------------------------------------------------------------
 -- Checks
 -------------------------------------------------------------
-
 function IsNil(X)
     if X == nil then
         if GDDM_DB_OPTIONS.Debug == true then
@@ -199,14 +193,14 @@ function WhatIsIt(X)
 end
 
 
-
-
-
 -------------------------------------------------------------
 -- Funkytown
 -------------------------------------------------------------
-
-
+function G.OnCommReceived(prefix, message, distribution, sender)
+    if prefix == G.triggerprefix then
+        print(message, sender)
+    end
+end
 
 
 

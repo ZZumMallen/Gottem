@@ -57,49 +57,19 @@ end)
 
 
 
-
 -------------------------------------------------------------
--- Funkytown
+-- Checks
 -------------------------------------------------------------
-function G.GetInfo(X)
-    ---@class mapID:number
-    local mapID = C_Map.GetBestMapForUnit(X)
-    local pos = C_Map.GetPlayerMapPosition(mapID, X);
-
-    if pos == nil then
-        ---@class locX:number
-        ---@class locY:number
-        G.locX = 0
-        G.locY = 0
-        return
-    else
-        ---@class locX:number
-        ---@class locY:number
-        G.locX = math.ceil(pos.x * 10000) / 100
-        G.locY = math.ceil(pos.y * 10000) / 100
-    end
-
-    if GetZoneText() == GetMinimapZoneText() then
-        ---@type string
-        G.locName = GetZoneText()
-    else
-        ---@type string
-        G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
-    end
-    
-    
-    print(G.locName, G.locX, G.locY)
-
-    -- print(tostring(G.locName)) also works but why
-end
-
-
 function IsNil(X)
     if X == nil then
-        print("IsNil: true")
+        if debug == true then
+            print("IsNil: true")
+        end
         return true
     else 
-        print("IsNil: false")
+        if debug == true then
+            print("IsNil: true")
+        end
         return false
     end
 end
@@ -139,6 +109,71 @@ function WhatIsIt()
         print(UnitCreatureFamily("Target"))
     end
 end
+
+
+
+    -- if GDDM_DB_OPTIONS.Debug == true then 
+    --     print("IsNil: true")
+    -- end
+
+
+
+
+
+
+-------------------------------------------------------------
+-- Funkytown
+-------------------------------------------------------------
+function G.GetInfo(X)
+    ---@class mapID:number
+    local mapID = C_Map.GetBestMapForUnit(X)
+    local pos = C_Map.GetPlayerMapPosition(mapID, X);
+
+    if pos == nil then
+        ---@class locX:number
+        ---@class locY:number
+        G.locX = 0
+        G.locY = 0
+        return
+    else
+        ---@class locX:number
+        ---@class locY:number
+        G.locX = math.ceil(pos.x * 10000) / 100
+        G.locY = math.ceil(pos.y * 10000) / 100
+    end
+
+    if GetZoneText() == GetMinimapZoneText() then
+        ---@type string
+        G.locName = GetZoneText()
+    else
+        ---@type string
+        G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
+    end
+
+
+    print(G.locName, G.locX, G.locY)
+
+    -- print(tostring(G.locName)) also works but why
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

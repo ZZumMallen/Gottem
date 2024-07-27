@@ -14,7 +14,7 @@ GDDM_DB_OPTIONS.Animals = GDDM_DB_OPTIONS.Animals or {}
 GDDM_DB_MSG.History = GDDM_DB_MSG.History or {}
 
 
-
+---@diagnostic disable-next-line
 LibStub("AceComm-3.0"):Embed(G)
 local Callback = LibStub("CallbackHandler-1.0")
 
@@ -206,74 +206,3 @@ function G.GetBasic(X)
 
     G.Animal_Msg = set_red_color .. UnitName("player") .. reset_color .. "found a wild " .. GetUnitName("Target")
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
--- 
--- 
---     print(prefix, message, channel, sender, playerName)
--- end
-
-
-
-
-
-
---table.insert(GDDM_DB_MSG.History, { GetUnitName("Player"), 'MsgString' })
-
---     ---@type string
---     local messageString = set_red_color .. tostring(X) .. reset_color ..
---         " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName) .. "\n"
-
---     print("G Message goes here")
-
---     --G:SendCommMessage(G.SendPrefix, messageString, "GUILD", nil)
-
-
-
---  if GDDM_DB_OPTIONS["Animals"] == true then     
---                 MsgString = "Idiot "..red..GetUnitName("player")..reset.." found a "..tostring(thing).." instead..."
---                 C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
-
-    --    if GDDM_DB_OPTIONS["NPC"] == true then           
-    --         MsgString = red..tostring(X)..reset.." found the elusive NPC; "..tostring(X).."..."
-    --         C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
-    --         return
-    --     else
-
-       -- Verify_Store()
-        -- MsgStringSend = red..arg4..reset.." found at "..tostring(G.locX)..", "..tostring(G.locY).." in "..tostring(G.locName).."\n"
-        -- Package = C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgStringSend, "GUILD")
-
-
---     ---------------------------------------------------------
---     -- Sender Message event
---     ---------------------------------------------------------
---     C_ChatInfo.RegisterAddonMessagePrefix(G.sendMessagePrefix)
---     if event == "CHAT_MSG_ADDON" and arg1 == G.sendMessagePrefix and arg2 == "go" and arg4 == MyFullName then
-
---         Verify_Target_In_List()
---         local sendPackage = C_ChatInfo.SendAddonMessage(G.triggerPrefix, 'MsgStringReceived', "GUILD")
-
-
---     elseif
---         event == "CHAT_MSG_ADDON" and arg1 == G.triggerPrefix and arg2 ~= "go" and arg4 ~= MyFullName then
-
-
---             -- G:MakeMessageWindow()
---             -- G:MakeText(MsgString)
---             -- G:MakeWindowCloser()
-
---     end
-
--- end)

@@ -25,18 +25,18 @@ f:RegisterEvent("CHAT_MSG_ADDON")
 f:SetScript("OnEvent", function(self, event, arg1, ...)      
     if event == "ADDON_LOADED" and arg1 == addonName then
 -------------------------------------------------------------
+-- Respect the event loop
+-------------------------------------------------------------
         function Verify_Target_In_List()
             local X = GetUnitName("Target")
             local T = "Target"
-            
 
-            if IsNil(X) then
+            if IsNil(X) then -- stops the party if nothing is targetted
                 return
             end
-            
 
-            if InList(X) then
-                CreateMessage(X)
+            if InList(X) then -- 
+                G.GetInfo(X)
                 return
             elseif
                 IsPlayer(T) then
@@ -46,39 +46,8 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
                 return
             end
         end
-        
-        function CreateMessage(X)
-            local set_red_color = "|cFFFF0000"
-            local reset_color = "|r"       
-         
-            ---@class mapID:number
-            local mapID = C_Map.GetBestMapForUnit(X)
-            local pos = C_Map.GetPlayerMapPosition(mapID, X);
-
-            if pos == nil then
-                G.locX = 0
-                G.locY = 0
-                return
-            else
-                G.locX = math.ceil(pos.x * 10000) / 100
-                G.locY = math.ceil(pos.y * 10000) / 100
-            end
-
-            if GetZoneText() == GetMinimapZoneText() then
-                G.locName = GetZoneText()
-            else
-                G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
-            end
-
-            
-            ---@type string
-            local messageString = set_red_color .. tostring(X) .. reset_color ..            
-            " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName) .. "\n"
-
-            print("acecomm Message goes here")
-
-            --AceComm:SendCommMessage(G.SendPrefix, messageString, "GUILD", nil)
-        end
+-------------------------------------------------------------
+-- Respect the event loop
 -------------------------------------------------------------
     end
 end)
@@ -88,10 +57,41 @@ end)
 
 
 
-table.insert(GDDM_DB_MSG.History, { GetUnitName("Player"), 'MsgString' })
 
+-------------------------------------------------------------
+-- Funkytown
+-------------------------------------------------------------
+function G.GetInfo(X)
+    ---@class mapID:number
+    local mapID = C_Map.GetBestMapForUnit(X)
+    local pos = C_Map.GetPlayerMapPosition(mapID, X);
 
+    if pos == nil then
+        ---@class locX:number
+        ---@class locY:number
+        G.locX = 0
+        G.locY = 0
+        return
+    else
+        ---@class locX:number
+        ---@class locY:number
+        G.locX = math.ceil(pos.x * 10000) / 100
+        G.locY = math.ceil(pos.y * 10000) / 100
+    end
 
+    if GetZoneText() == GetMinimapZoneText() then
+        ---@type string
+        G.locName = GetZoneText()
+    else
+        ---@type string
+        G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
+    end
+    
+    
+    print(G.locName, G.locX, G.locY)
+
+    -- print(tostring(G.locName)) also works but why
+end
 
 
 function IsNil(X)
@@ -132,15 +132,28 @@ end
 
 
 function WhatIsIt()
-    print(UnitCreatureFamily("Target"))
-    print("unitcf")
+    if UnitCreatureFamily("Target") == nil then
+        print(UnitName("Target"))
+        return
+    else
+        print(UnitCreatureFamily("Target"))
+    end
 end
 
 
 
 
 
+--table.insert(GDDM_DB_MSG.History, { GetUnitName("Player"), 'MsgString' })
+-- local set_red_color = "|cFFFF0000"
+-- local reset_color = "|r"
+--     ---@type string
+--     local messageString = set_red_color .. tostring(X) .. reset_color ..
+--         " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName) .. "\n"
 
+--     print("acecomm Message goes here")
+
+--     --AceComm:SendCommMessage(G.SendPrefix, messageString, "GUILD", nil)
 
 
 

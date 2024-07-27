@@ -4,14 +4,15 @@ local G = core.A
 G.triggerPrefix = "ope_gottem"
 G.sendPrefix = "gottem_send"
 
+
 GDDM_DB_MSG = GDDM_DB_MSG or {} -- shorten do GDm
 GDDM_DB_OPTIONS = GDDM_DB_OPTIONS or {} -- shorten to GDO
+GDDM_DB_OPTIONS.INIT = GDDM_DB_OPTIONS.INIT or {}
 GDDM_DB_OPTIONS.NPC = GDDM_DB_OPTIONS.NPC or {}
-GDDM_DB_OPTIONS.Debug = GDDM_DB_OPTIONS.Debug or false
+GDDM_DB_OPTIONS.Debug = GDDM_DB_OPTIONS.Debug or {}
 GDDM_DB_OPTIONS.Animals = GDDM_DB_OPTIONS.Animals or {}
 GDDM_DB_MSG.History = GDDM_DB_MSG.History or {}
 
-local debug = GDDM_DB_OPTIONS.Debug
 
 local AceComm = LibStub("AceComm-3.0")
 local Callback = LibStub("CallbackHandler-1.0")
@@ -19,14 +20,17 @@ local Callback = LibStub("CallbackHandler-1.0")
 SLASH_GOTTEM1 = "/gottem"
 SlashCmdList["GOTTEM"] = function() Verify_Target_In_List() end;
 
+
+
 local f = CreateFrame("FRAME")
 f:RegisterEvent("ADDON_LOADED")
 f:RegisterEvent("CHAT_MSG_ADDON")
 f:SetScript("OnEvent", function(self, event, arg1, ...)      
     if event == "ADDON_LOADED" and arg1 == addonName then
--------------------------------------------------------------
--- Respect the event loop
--------------------------------------------------------------
+        if GDDM_DB_OPTIONS.Debug == true then
+            print("Addon Loaded")
+        end
+
         function Verify_Target_In_List()
             local X = GetUnitName("Target")
             local T = "Target"
@@ -35,87 +39,164 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
                 return
             end
 
-            if InList(X) then -- 
-                G.GetInfo(X)
+            
+
+            if InList(X) then                 
                 return
             elseif
-                IsPlayer(T) then
+                IsPlayerCharacter(T) then
                 return
             elseif
-                WhatIsIt() then
+                WhatIsIt()
+                then
                 return
             end
         end
--------------------------------------------------------------
--- Respect the event loop
--------------------------------------------------------------
+
+        function G.GetInfo(X)
+            local set_red_color = "|cFFFF0000"
+            local reset_color = "|r"
+
+            ---@class mapID:number
+            local mapID = C_Map.GetBestMapForUnit(X)
+            local pos = C_Map.GetPlayerMapPosition(mapID, X);
+
+            if pos == nil then
+                ---@class locX:number
+                ---@class locY:number
+                G.locX = 0
+                G.locY = 0
+                return
+            else
+                ---@class locX:number
+                ---@class locY:number
+                G.locX = math.ceil(pos.x * 10000) / 100
+                G.locY = math.ceil(pos.y * 10000) / 100
+            end
+
+            if GetZoneText() == GetMinimapZoneText() then
+                ---@type string
+                G.locName = GetZoneText()
+            else
+                ---@type string
+                G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
+            end
+
+            G.In_List_Msg = set_red_color .. tostring(X) .. reset_color ..
+                " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName)
+
+            G.Not_In_List_Msg = set_red_color ..
+            UnitName("player") .. reset_color .. ", found some guy named " .. GetUnitName("Target") .. ". Almost!"
+
+            G.NPC_Msg = set_red_color ..
+            UnitName("player") .. reset_color .. ", found an NPC named " .. GetUnitName("Target") .. ". Close Buddy!"
+
+            G.Animal_Msg = set_red_color .. UnitName("player") .. reset_color .. "found a wild " .. GetUnitName("Target")
+        end
+
+        function G.GetBasic(X)
+            local set_red_color = "|cFFFF0000"
+            local reset_color = "|r"
+
+            if GetZoneText() == GetMinimapZoneText() then
+                ---@type string
+                G.locName = GetZoneText()
+            else
+                ---@type string
+                G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
+            end
+
+            G.In_List_Msg = set_red_color .. tostring(X) .. reset_color ..
+                " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName)
+
+            G.Not_In_List_Msg = set_red_color ..
+            UnitName("player") .. reset_color .. ", found some guy named " .. GetUnitName("Target") .. ". Almost!"
+
+            G.NPC_Msg = set_red_color ..
+            UnitName("player") .. reset_color .. ", found an NPC named " .. GetUnitName("Target") .. ". Close Buddy!"
+
+            G.Animal_Msg = set_red_color .. UnitName("player") .. reset_color .. "found a wild " .. GetUnitName("Target")
+        end
+
+        SentTime = GetTime()
+        GDDM_DB_OPTIONS.INIT = SentTime
+
     end
 end)
-
-
-
-
 
 
 -------------------------------------------------------------
 -- Checks
 -------------------------------------------------------------
+
 function IsNil(X)
     if X == nil then
-        if debug == true then
+        if GDDM_DB_OPTIONS.Debug == true then
             print("IsNil: true")
         end
         return true
     else 
-        if debug == true then
+        if GDDM_DB_OPTIONS.Debug == true then
             print("IsNil: true")
         end
         return false
     end
 end
 
-function InList(X)
+function InList(X) -- checks if the target is in the DB
     local found = true
     for _, j in ipairs(G.tList) do
         if j == X then 
-            print(j,X)
             found = true
-            print("InList: True")
+            if GDDM_DB_OPTIONS.Debug == true then
+                 print("InList: True")
+            end
+            G.GetInfo(X)
+            AceComm:SendCommMessage(G.sendPrefix,G.In_List_Msg,"Guild")
             return true
         end
     end
     if not found then
-        print("InList: false")
+        if GDDM_DB_OPTIONS.Debug == true then
+            print("InList: false")
+        end
         return false
     end
 end
-        
-function IsPlayer(T)
+
+function IsPlayerCharacter(T,X) -- is it a player-character
     if UnitIsPlayer(T) then
-        print("IsPlayer: true")
+        if GDDM_DB_OPTIONS.Debug == true then
+            print("IsPlayer: true")
+        end
+        G.GetBasic(X)
+        AceComm:SendCommMessage(G.sendPrefix, G.Not_In_List_Msg, "Guild")
         return true
     else
-        print("IsPlayer: false")
+        if GDDM_DB_OPTIONS.Debug == true then
+            print("IsPlayer: false")
+        end        
         return false
     end
 end
 
-
-function WhatIsIt()
+function WhatIsIt(X)
     if UnitCreatureFamily("Target") == nil then
-        print(UnitName("Target"))
-        return
+        if GDDM_DB_OPTIONS.Debug == true then
+            print("Non-Creature found: "..UnitName("Target"))
+        end
+        G.GetBasic(X)
+        AceComm:SendCommMessage(G.sendPrefix, G.NPC_Msg, "Guild")
+        return true
     else
-        print(UnitCreatureFamily("Target"))
+        if GDDM_DB_OPTIONS.Debug == true then
+            print("Creature found: "..UnitCreatureFamily("Target"))
+        end
+        G.GetBasic(X)
+        AceComm:SendCommMessage(G.sendPrefix, G.Animal_Msg, "Guild")
+        return true 
     end
 end
-
-
-
-    -- if GDDM_DB_OPTIONS.Debug == true then 
-    --     print("IsNil: true")
-    -- end
-
 
 
 
@@ -124,37 +205,6 @@ end
 -------------------------------------------------------------
 -- Funkytown
 -------------------------------------------------------------
-function G.GetInfo(X)
-    ---@class mapID:number
-    local mapID = C_Map.GetBestMapForUnit(X)
-    local pos = C_Map.GetPlayerMapPosition(mapID, X);
-
-    if pos == nil then
-        ---@class locX:number
-        ---@class locY:number
-        G.locX = 0
-        G.locY = 0
-        return
-    else
-        ---@class locX:number
-        ---@class locY:number
-        G.locX = math.ceil(pos.x * 10000) / 100
-        G.locY = math.ceil(pos.y * 10000) / 100
-    end
-
-    if GetZoneText() == GetMinimapZoneText() then
-        ---@type string
-        G.locName = GetZoneText()
-    else
-        ---@type string
-        G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
-    end
-
-
-    print(G.locName, G.locX, G.locY)
-
-    -- print(tostring(G.locName)) also works but why
-end
 
 
 
@@ -180,8 +230,7 @@ end
 
 
 --table.insert(GDDM_DB_MSG.History, { GetUnitName("Player"), 'MsgString' })
--- local set_red_color = "|cFFFF0000"
--- local reset_color = "|r"
+
 --     ---@type string
 --     local messageString = set_red_color .. tostring(X) .. reset_color ..
 --         " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName) .. "\n"

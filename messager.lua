@@ -8,18 +8,16 @@ G.sendPrefix = "gottem_send"
 GDDM_DB_MSG = GDDM_DB_MSG or {} -- shorten do GDm
 GDDM_DB_OPTIONS = GDDM_DB_OPTIONS or {} -- shorten to GDO
 GDDM_DB_OPTIONS.INIT = GDDM_DB_OPTIONS.INIT or {}
-GDDM_DB_OPTIONS.NPC = GDDM_DB_OPTIONS.NPC or {}
+GDDM_DB_OPTIONS.NPC = GDDM_DB_OPTIONS.NPC or true
 GDDM_DB_OPTIONS.Debug = GDDM_DB_OPTIONS.Debug or {}
-GDDM_DB_OPTIONS.Animals = GDDM_DB_OPTIONS.Animals or {}
+GDDM_DB_OPTIONS.Animals = GDDM_DB_OPTIONS.Animals or true
 GDDM_DB_MSG.History = GDDM_DB_MSG.History or {}
 
 
----@diagnostic disable-next-line
+---@diagnostic disable:undefined-field
 LibStub("AceComm-3.0"):Embed(G)
 local Callback = LibStub("CallbackHandler-1.0")
 
--- local unit, realm = UnitFullName("Player")
--- local playerName = tostring(unit) .. "-" .. tostring(realm)
 
 local playerName = UnitName("Player")
 
@@ -46,11 +44,11 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
                 return
             end
 
-            if G.IsMeg(X) then
+            if G.IsMeg(X) then -- checks for Megs shaman
                 return
             end
 
-            if G.InList(X) then            
+            if G.InList(X) then
                 return
             elseif
                 G.IsPlayerCharacter(T) then

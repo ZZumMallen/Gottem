@@ -136,7 +136,7 @@ function G.WhatIsIt(X)
     if UnitCreatureFamily("Target") == nil then
         
         
-        if GDDM_DB_OPTIONS.MPC == true then
+        if GDDM_DB_OPTIONS.NPC == true then
             G.GetBasic(X)
             G:SendCommMessage(G.sendPrefix, G.NPC_Msg, "Guild")
         end

@@ -250,6 +250,11 @@ function G:MakeMessageWindow(message)
     MsgFrame.MessageContainer:SetFontObject("Game13Font")
     MsgFrame.MessageContainer:CanWordWrap()
     MsgFrame.MessageContainer:SetText(message)
+
+    if strlen(message) > 74 then
+        MsgFrame:SetSize(strlen(message)*6.5,30)
+    end
+
     previousWindow = MsgFrame
     
     return MsgFrame    

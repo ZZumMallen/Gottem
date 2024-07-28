@@ -49,7 +49,7 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
             if G.IsMeg(X) then
                 return
             end
-            
+
             if G.InList(X) then            
                 return
             elseif
@@ -205,7 +205,7 @@ function G.GetBasic()
     G.NPC_Msg = set_red_color ..
         UnitName("player") .. reset_color .. ", found an NPC named " .. GetUnitName("Target") .. ". Close Buddy!"
 
-    G.Animal_Msg = set_red_color .. UnitName("player") .. reset_color .. "found a wild " .. GetUnitName("Target")
+    G.Animal_Msg = set_red_color .. UnitName("player") .. reset_color .. " found a wild " .. GetUnitName("Target")
 
     G.Megan = set_red_color .. "Dammit Meg" .. reset_color
 

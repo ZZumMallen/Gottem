@@ -73,6 +73,7 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
     
 end)
 
+---@diagnostic disable:redundant-parameter
 -------------------------------------------------------------
 -- Receiving a messagge
 -------------------------------------------------------------
@@ -134,6 +135,7 @@ end
 
 function G.WhatIsIt(X)
     if UnitCreatureFamily("Target") == nil then
+        
         
         if GDDM_DB_OPTIONS.MPC == true then
             G.GetBasic(X)

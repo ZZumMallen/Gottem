@@ -2,17 +2,57 @@ local addonName, core = ...
 local T = core.A;
 
 
+GDDM_MY_INFO = GDDM_MY_INFO or {}
+
+GDDM_MY_INFO.POS = GDDM_MY_INFO.POS or {}
+GDDM_MY_INFO.POS = {}
+
+---@class Point: string
+---@class RelPoint: string
+T.Point = GDDM_MY_INFO.POS[1]
+T.RelPoint = GDDM_MY_INFO.POS[2]
+
+---@class xOff: string
+---@class yOff: number
+T.xOff = GDDM_MY_INFO.POS[3]
+T.yOff = GDDM_MY_INFO.POS[4]
+
+
+
 SLASH_TEST1 = "/zest"
 SlashCmdList["zest"] = function() print("test") end;
 
-function CreateNewFrame(W,H,pte,parent,rPte,xO,yO)
-    UI = CreateFrame("Frame", nil, UIParent,"BasicFrameTemplateWithInset")
-    UI:SetSize(W,H)
-    UI:SetPoint(pte,parent,rPte,xO,yO)
-    return UI
-end
 
-function CreatePanelButton(pte,UI,rPte,x,y,w,h,text)
+GameMenuFrame:SetScale(0.6)
+MinimapCluster:SetScale(0.75)
+
+local f = CreateFrame("FRAME")
+f:RegisterEvent("ADDON_LOADED")
+f:SetScript("OnEvent", function(self, event, arg1, ...)
+    if event == "ADDON_LOADED" and arg1 == addonName then
+        UI = CreateFrame("Frame", "SaveLoc", UIParent, "BasicFrameTemplateWithInset")
+        UI:SetSize(200, 200)
+        UI:SetPoint(T.Point, UIParent, "CENTER", 0, 0)
+        UI:EnableMouse(true)
+        UI:SetMovable(true);
+        UI:RegisterForDrag("LeftButton");
+        UI:SetScript("OnDragStart", function(self) self:StartMoving() end);         
+        UI:SetScript("OnDragStop", function(self)
+            
+            self:StopMovingOrSizing()
+            local point, relativeTo, relativePoint, xOfs, yOfs = UI:GetPoint()            
+            DEFAULT_CHAT_FRAME:AddMessage(point)
+            DEFAULT_CHAT_FRAME:AddMessage(relativeTo)
+            DEFAULT_CHAT_FRAME:AddMessage(relativePoint)
+            DEFAULT_CHAT_FRAME:AddMessage(xOfs)
+            DEFAULT_CHAT_FRAME:AddMessage(yOfs)
+            GDDM_MY_INFO.POS = { point, relativeTo, relativePoint, xOfs, yOfs }
+        end)
+    end
+end)
+
+
+function CreatePanelButton(pte,rPte,x,y,w,h,text)
     UI.Btn = CreateFrame("BUTTON", nil, UI, "UIPanelButtonTemplate")
     UI.Btn:SetPoint(pte,UI,rPte,x,y)
     UI.Btn:SetSize(w,h)
@@ -25,97 +65,19 @@ end
 
 
 
-F1 = CreateNewFrame(00,200,"CENTER",UIParent,"CENTER",-400,400)
-
-F2 = CreateNewFrame(200, 200, "CENTER", UIParent, "CENTER", 0, 400)
-
-F3 = CreateNewFrame(200, 200, "CENTER", UIParent, "CENTER", 400, 400)
-
-F4 = CreateNewFrame(200, 200, "CENTER", UIParent, "CENTER", -400, 100)
-
-F5 = CreateNewFrame(200, 200, "CENTER", UIParent, "CENTER", 0, 100)
-
-F6 = CreateNewFrame(200, 200, "CENTER", UIParent, "CENTER", 400, 100)
-
-B1 = CreatePanelButton(F2,"CENTER",4)
 
 
 
 
 
+-- EventRegistry:RegisterCallback("PlayerSpellsFrame.SpellBookFrame.Show", function()
+-- PlayerSpellsFrame:SetScale(0.6)
+-- PlayerSpellsFrame:SetMovable(true);
+-- PlayerSpellsFrame:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end);
+-- PlayerSpellsFrame:RegisterForDrag("LeftButton");
+-- PlayerSpellsFrame:SetScript("OnDragStart", function(self) self:StartMoving() end);
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
---
---
---     print(prefix, message, channel, sender, playerName)
--- end
-
-
-
-
-
-
---table.insert(GDDM_DB_MSG.History, { GetUnitName("Player"), 'MsgString' })
-
---     ---@type string
---     local messageString = set_red_color .. tostring(X) .. reset_color ..
---         " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName) .. "\n"
-
---     print("G Message goes here")
-
---     --G:SendCommMessage(G.SendPrefix, messageString, "GUILD", nil)
-
-
-
---  if GDDM_DB_OPTIONS["Animals"] == true then
---                 MsgString = "Idiot "..red..GetUnitName("player")..reset.." found a "..tostring(thing).." instead..."
---                 C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
-
---    if GDDM_DB_OPTIONS["NPC"] == true then
---         MsgString = red..tostring(X)..reset.." found the elusive NPC; "..tostring(X).."..."
---         C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgString, "GUILD")
---         return
---     else
-
--- Verify_Store()
--- MsgStringSend = red..arg4..reset.." found at "..tostring(G.locX)..", "..tostring(G.locY).." in "..tostring(G.locName).."\n"
--- Package = C_ChatInfo.SendAddonMessage(G.triggerPrefix, MsgStringSend, "GUILD")
-
-
---     ---------------------------------------------------------
---     -- Sender Message event
---     ---------------------------------------------------------
---     C_ChatInfo.RegisterAddonMessagePrefix(G.sendMessagePrefix)
---     if event == "CHAT_MSG_ADDON" and arg1 == G.sendMessagePrefix and arg2 == "go" and arg4 == MyFullName then
-
---         Verify_Target_In_List()
---         local sendPackage = C_ChatInfo.SendAddonMessage(G.triggerPrefix, 'MsgStringReceived', "GUILD")
-
-
---     elseif
---         event == "CHAT_MSG_ADDON" and arg1 == G.triggerPrefix and arg2 ~= "go" and arg4 ~= MyFullName then
-
-
---             -- G:MakeMessageWindow()
---             -- G:MakeText(MsgString)
---             -- G:MakeWindowCloser()
-
---     end
-
--- end)

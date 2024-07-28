@@ -160,77 +160,7 @@ end)
 
 
 
-------------------------------------------------------------------------------
--- Message Box area
-------------------------------------------------------------------------------
-local previousWindow
 
-function C:MakeMessageWindow()
-    if previousWindow then
-        previousWindow:Hide()
-        previousWindow = nil
-    end
-
-    MW = CreateFrame("frame", nil, UIParent, "InsetFrameTemplate3")    
-    MW:Hide()
-    MW:SetSize(450, 30)
-    MW:ClearAllPoints()
-    MW:SetPoint("BOTTOMLEFT", ChatFrame1Tab, "TOPLEFT", 0, 0)
-    MW:EnableMouse(true);
-    MW:SetMovable(true);
-    MW:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end);
-    MW:RegisterForDrag("LeftButton");
-    MW:SetScript("OnDragStart", function(self) self:StartMoving() end);
-    MW:Show()
-
-    previousWindow = MW
-    --C_Timer.After(8, function() MW:hide() end)
-
-    return MW
-end
-
-------------------------------------------------------------------------------
--- Message Box Close
-------------------------------------------------------------------------------
-local previousClose
-function C:MakeWindowCloser()
-    if previousClose then
-        previousClose:Hide()
-        previousClose = nil
-    end
-
-    WC = CreateFrame("Frame", nil, MW ,"InsetFrameTemplate3")
-    WC:SetSize(30,30)
-    WC:SetPoint("TOPLEFT",MW,"TOPRIGHT", 5,0)
-    WC:SetScript("OnMouseDown", function(self) WC:Hide(); MW:Hide() end)
-
-    
-    previousClose = WC
-    return WC
-
-end
-
-------------------------------------------------------------------------------
--- Message Itself
-------------------------------------------------------------------------------
-local previousText
-function C:MakeText(text)
-    if previousText then
-        previousText:SetText("")
-        previousText:Hide()
-        PreviousText = nil
-    end
-
-    MSG = MW:CreateFontString(nil, "OVERLAY")      
-    MSG:SetPoint("LEFT", MW, "LEFT", 10, 0);
-    MSG:SetFontObject("Game13Font")
-    MSG:CanWordWrap()
-    MSG:SetText(text)
-
-    previousText = MSG
-
-    return MSG
-end
 
 
 

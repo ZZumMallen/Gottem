@@ -4,23 +4,12 @@ local G = core.A
 G.triggerPrefix = "ope_gottem"
 G.sendPrefix = "gottem_send"
 
-
-GDDM_DB_MSG = GDDM_DB_MSG or {} -- shorten do GDm
-GDDM_DB_OPTIONS = GDDM_DB_OPTIONS or {} -- shorten to GDO
-GDDM_DB_OPTIONS.INIT = GDDM_DB_OPTIONS.INIT or {}
-GDDM_DB_OPTIONS.NPC = GDDM_DB_OPTIONS.NPC or true
-GDDM_DB_OPTIONS.Debug = GDDM_DB_OPTIONS.Debug or {}
-GDDM_DB_OPTIONS.Animals = GDDM_DB_OPTIONS.Animals or true
-GDDM_DB_MSG.History = GDDM_DB_MSG.History or {}
-
-
 ---@diagnostic disable:undefined-field
 LibStub("AceComm-3.0"):Embed(G)
 local Callback = LibStub("CallbackHandler-1.0")
 
-
+-- Character specific name save
 local playerName = UnitName("Player")
-
 GDDM_MY_INFO.ME = playerName
 
 SLASH_GOTTEM1 = "/gottem"

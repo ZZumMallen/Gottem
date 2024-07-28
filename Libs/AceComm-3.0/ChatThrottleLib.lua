@@ -22,7 +22,7 @@
 --
 -- LICENSE: ChatThrottleLib is released into the Public Domain
 --
-
+---@diagnostic disable
 local CTL_VERSION = 29
 
 local _G = _G

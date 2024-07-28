@@ -54,7 +54,6 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
                 return
             elseif
                 G.IsPlayerCharacter(T) then
-                    print("Ischaracter run")
                 return
             elseif
                 G.WhatIsIt()

@@ -125,7 +125,7 @@ function G.IsPlayerCharacter(T,X) -- is it a player-character
         G.GetBasic(X)
         G:SendCommMessage(G.sendPrefix, G.Not_In_List_Msg, "Guild")
         return true
-    else   
+    else
         return false
     end
 end
@@ -251,7 +251,7 @@ function G:MakeMessageWindow(message)
     MsgFrame.MessageContainer:CanWordWrap()
     MsgFrame.MessageContainer:SetText(message)
 
-    if strlen(message) > 74 then
+    if strlen(message) > 70 then
         MsgFrame:SetSize(strlen(message)*6.5,30)
     end
 

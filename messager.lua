@@ -225,9 +225,15 @@ function G:MakeMessageWindow(message)
         previousWindow = nil
     end
     
+    local wideboy = 510
+
+    if strlen(message) >= 70 then
+        wideboy = (strlen(message) * 6.4) + 30
+    end
+
     MsgFrame = CreateFrame("frame", nil, UIParent, "InsetFrameTemplate3")
     MsgFrame:Hide()
-    MsgFrame:SetSize(510, 30)
+    MsgFrame:SetSize(wideboy, 30)
     MsgFrame:ClearAllPoints()
     MsgFrame:SetPoint("BOTTOMLEFT", ChatFrame1Tab, "TOPLEFT", 0, 0)
     MsgFrame:EnableMouse(true);
@@ -251,10 +257,7 @@ function G:MakeMessageWindow(message)
     MsgFrame.MessageContainer:CanWordWrap()
     MsgFrame.MessageContainer:SetText(message)
 
-    if strlen(message) > 70 then
-        MsgFrame:SetSize(strlen(message)*6.5,30)
-    end
-
+    
     previousWindow = MsgFrame
     
     return MsgFrame    

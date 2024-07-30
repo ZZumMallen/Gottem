@@ -2,7 +2,7 @@ local addonName, core = ...
 local G = core.A
 
 G.triggerPrefix = "ope_gottem"
-G.sendPrefix = "gottem_send"
+local sendPrefix = "gottem_send"
 
 ---@diagnostic disable:undefined-field
 LibStub("AceComm-3.0"):Embed(G)
@@ -10,95 +10,132 @@ local Callback = LibStub("CallbackHandler-1.0")
 
 -- Character specific name save
 local playerName = UnitName("Player")
-GDDM_MY_INFO.ME = playerName
+
+GDDM_MY_INFO = {
+    ME = playerName,
+    TAR = "Unknown"
+}
+
+local function updateMessages()
+    GDDM_MY_INFO.TAR = GetUnitName("Target")
+end
 
 SLASH_GOTTEM1 = "/gottem"
-SlashCmdList["GOTTEM"] = function() Verify_Target_In_List() end;
+SlashCmdList["GOTTEM"] = function()
+    InitVars()
+end;
 
 local f = CreateFrame("FRAME")
 f:RegisterEvent("ADDON_LOADED")
 f:RegisterEvent("CHAT_MSG_ADDON")
 f:SetScript("OnEvent", function(self, event, arg1, ...)
     if event == "ADDON_LOADED" and arg1 == addonName then
-        G:RegisterComm(G.sendPrefix)
-        if GDDM_DB_OPTIONS.Debug == true then
-            print("Addon Loaded")
+        
+        GDDM_DB_OPTIONS.POS = GDDM_DB_OPTIONS.POS or {"CENTER",nil,"CENTER",0,0}
+       
+
+        function InitVars()
+            G:RegisterComm(sendPrefix)            
+            updateMessages()
+            K = GDDM_MY_INFO.TAR
+            Verify_Target_In_List()
+            return K
         end
 
         function Verify_Target_In_List()
-            local X = GetUnitName("Target")
-            local T = "Target"
 
-            if G.IsNil(X) then -- stops the party if nothing is targetted
+            if IsNil(K) then -- stops the party if nothing is targetted
                 return
             end
 
-            if G.IsMeg(X) then -- checks for Megs shaman
+            if IsMeg(K) then -- checks for Megs shaman
                 return
             end
 
-            if G.InList(X) then
+            if InList(K) then
+                return
+            end
+            
+            if InGuild(K) then
+                return
+            end
+            
+            
+            if IsPlayerCharacter() then
                 return
             elseif
-                G.IsPlayerCharacter(T) then
-                return
-            elseif
-                G.WhatIsIt()
+                WhatIsIt()
                 then
                 return
+                end
             end
-        end
 
         SentTime = GetTime()
         GDDM_DB_OPTIONS.INIT = SentTime
 
     elseif event == "CHAT_MESSAGE_ADDON" then
         G.OnCommReceived()
-
     end
-    
 end)
 
----@diagnostic disable:redundant-parameter
+
+
+
+
+
 -------------------------------------------------------------
 -- Receiving a messagge
 -------------------------------------------------------------
 function G.OnCommReceived(_, prefix, message, _, sender)
-    if prefix == G.sendPrefix and sender ~= GDDM_MY_INFO.ME then
+    if prefix == sendPrefix and sender ~= GDDM_MY_INFO.ME then
         print(message)
     else
-       
-        G:MakeMessageWindow(message)
+        MakeMessageWindow(message)
     end
 end
+
 
 -------------------------------------------------------------
 -- Checks
 -------------------------------------------------------------
-function G.IsNil(X)
+local MeganMsg, NotListMsg, ListMsg, NPCMsg, AnimalMsg
+function IsNil(X)
     if X == nil then
-        return true
-    else 
-        return false
-    end
-end
-
-function G.IsMeg(X)
-    if X == "Mouse" then
-        G:SendCommMessage(G.sendPrefix, G.Megan, "Guild")
         return true
     else
         return false
     end
 end
 
-function G.InList(X) -- checks if the target is in the DB
+function IsMeg(X)
+    local m = X
+    if m == "Mouse" then
+        GetBasic()
+        G:SendCommMessage(sendPrefix, MeganMsg, "Guild")
+        return true
+    else
+        return false
+    end
+end
+
+function InGuild(X)
+    local guildName, _, _= GetGuildInfo(X)
+    if guildName == "Peons" then
+        GetInfo(X)
+        G:SendCommMessage(sendPrefix, GuildMsg, "Guild")
+        return true
+    else
+        return false
+    end
+end
+
+function InList(X) -- checks if the target is in the DB
     local found = true
     for _, j in ipairs(G.tList) do
         if j == X then -- added this code because of megans shaman
             found = true
-            G.GetInfo(X)
-            G:SendCommMessage(G.sendPrefix,G.In_List_Msg,"Guild")
+            GetInfo(X)
+            G:SendCommMessage(sendPrefix,ListMsg,"Guild")
             return true
         end
     end
@@ -107,33 +144,27 @@ function G.InList(X) -- checks if the target is in the DB
     end
 end
 
-function G.IsPlayerCharacter(T,X) -- is it a player-character
-    if UnitIsPlayer(T) then
-        G.GetBasic(X)
-        G:SendCommMessage(G.sendPrefix, G.Not_In_List_Msg, "Guild")
+function IsPlayerCharacter() -- is it a player-character
+    if UnitIsPlayer("Target") then
+        GetBasic()
+        G:SendCommMessage(sendPrefix, NotListMsg, "Guild")
         return true
     else
         return false
     end
 end
 
-
-
-function G.WhatIsIt(X)
-    if UnitCreatureFamily("Target") == nil then
-        
-        
-        if GDDM_DB_OPTIONS.NPC == true then
-            G.GetBasic(X)
-            G:SendCommMessage(G.sendPrefix, G.NPC_Msg, "Guild")
-        end
+function WhatIsIt()
+    if UnitCreatureFamily("Target") == nil then        
+        GetBasic()
+        G:SendCommMessage(sendPrefix, NPCMsg, "Guild")    
         return true
     else
         if GDDM_DB_OPTIONS.Animals == true then
-            G.GetBasic(X)
-            G:SendCommMessage(G.sendPrefix, G.Animal_Msg, "Guild")
+            GetBasic()
+            G:SendCommMessage(sendPrefix, AnimalMsg, "Guild")
         end
-        return true 
+        return true
     end
 end
 
@@ -141,43 +172,51 @@ end
 -------------------------------------------------------------
 -- Funkytown - G. GetInfo & GetBasic
 -------------------------------------------------------------
+function GetInfo(X)
+    
+    local red = "|cFFFF0000"
+    local reset = "|r"
+    local green = "|cFF34f00e"
+    local playerMe = green .. GDDM_MY_INFO.ME .. reset
+    local myTarget = red .. GDDM_MY_INFO.TAR .. reset
+    local tStamp = date("%I:%M%p - ")
 
-function G.GetInfo(X)
-    local set_red_color = "|cFFFF0000"
-    local reset_color = "|r"
-
-    ---@class mapID:number
     local mapID = C_Map.GetBestMapForUnit(X)
+
+    ---@diagnostic disable-next-line
     local pos = C_Map.GetPlayerMapPosition(mapID, X);
 
     if pos == nil then
-        ---@class locX:number
-        ---@class locY:number
         G.locX = 0
         G.locY = 0
         return
     else
-        ---@class locX:number
-        ---@class locY:number
         G.locX = math.ceil(pos.x * 10000) / 100
         G.locY = math.ceil(pos.y * 10000) / 100
     end
 
     if GetZoneText() == GetMinimapZoneText() then
-        ---@type string
         G.locName = GetZoneText()
     else
-        ---@type string
         G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
     end
 
-    G.In_List_Msg = set_red_color .. tostring(X) .. reset_color ..
-        " found at " .. tostring(G.locX) .. ", " .. tostring(G.locY) .. " in " .. tostring(G.locName)
+    ---@type string
+    GuildMsg = tStamp .. playerMe.. " spotted " .. myTarget .."\n" ..
+        "Found at " .. G.locX .. ", " .. G.locY .. " in " .. G.locName
+
+    ListMsg = tStamp .. playerMe .. " spotted " .. myTarget .. "\n" ..
+        "Found at " .. G.locX .. ", " .. G.locY .. " in " .. G.locName
+    return red, green, reset, playerMe, myTarget
 end
 
-function G.GetBasic()
-    local set_red_color = "|cFFFF0000"
-    local reset_color = "|r"
+function GetBasic()
+    local red = "|cFFFF0000"
+    local reset = "|r"
+    local green = "|cFF34f00e"
+    local playerMe = green .. GDDM_MY_INFO.ME .. reset
+    local myTarget = red .. GDDM_MY_INFO.TAR .. reset
+    local tStamp = date("%I:%M%p - ")
 
     if GetZoneText() == GetMinimapZoneText() then
         ---@type string
@@ -187,47 +226,50 @@ function G.GetBasic()
         G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
     end
 
-    G.Not_In_List_Msg = set_red_color ..
-        UnitName("player") .. reset_color .. ", found some guy named " .. GetUnitName("Target") .. ". Almost!"
+    NotListMsg = tStamp..playerMe .. " found some guy named " .. myTarget .. "\n" ..
+        "Almost!"
 
-    G.NPC_Msg = set_red_color ..
-        UnitName("player") .. reset_color .. ", found an NPC named " .. GetUnitName("Target") .. ". Close Buddy!"
+    NPCMsg = tStamp .. playerMe .. " found an NPC named " .. myTarget .. "\n" ..
+        "Close one buddy!"
 
-    G.Animal_Msg = set_red_color .. UnitName("player") .. reset_color .. " found a wild " .. GetUnitName("Target")
+    AnimalMsg = tStamp .. playerMe .. " found a wild " .. myTarget .. "\n" ..
+        "Looks like one if those BIRDS got out"
 
-    G.Megan = set_red_color .. "Dammit Meg" .. reset_color
-
+    MeganMsg = red .. "Dammit Meg" .. reset
 end
-
-
 
 ------------------------------------------------------------------------------
 -- Message Box area
 ------------------------------------------------------------------------------
 local previousWindow
 
-function G:MakeMessageWindow(message)
+function MakeMessageWindow(message)
     if previousWindow then
         previousWindow:Hide()
         previousWindow = nil
     end
-    
-    local wideboy = 510
 
-    if strlen(message) >= 70 then
-        wideboy = (strlen(message) * 6.4) + 30
-    end
-
-    MsgFrame = CreateFrame("frame", nil, UIParent, "InsetFrameTemplate3")
+    MsgFrame = CreateFrame("frame", "MessageFrame", UIParent, "InsetFrameTemplate3")
     MsgFrame:Hide()
-    MsgFrame:SetSize(wideboy, 30)
-    MsgFrame:ClearAllPoints()
-    MsgFrame:SetPoint("BOTTOMLEFT", ChatFrame1Tab, "TOPLEFT", 0, 0)
+    MsgFrame:SetSize(540, 60)
+    -- MsgFrame:ClearAllPoints()
+    MsgFrame:SetPoint(GDDM_DB_OPTIONS.POS[1], GDDM_DB_OPTIONS.POS[2], GDDM_DB_OPTIONS.POS[3], GDDM_DB_OPTIONS.POS[4],
+        GDDM_DB_OPTIONS.POS[5])
     MsgFrame:EnableMouse(true);
     MsgFrame:SetMovable(true);
-    MsgFrame:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end);
     MsgFrame:RegisterForDrag("LeftButton");
     MsgFrame:SetScript("OnDragStart", function(self) self:StartMoving() end);
+    MsgFrame:SetScript("OnDragStop", function(self)
+        self:StopMovingOrSizing()
+        local point, parent, relativePoint, xOfs, yOfs = MsgFrame:GetPoint()
+        -- DEFAULT_CHAT_FRAME:AddMessage(point)
+        -- DEFAULT_CHAT_FRAME:AddMessage(parent)
+        -- DEFAULT_CHAT_FRAME:AddMessage(relativePoint)
+        -- DEFAULT_CHAT_FRAME:AddMessage(xOfs)
+        -- DEFAULT_CHAT_FRAME:AddMessage(yOfs)
+        GDDM_DB_OPTIONS.POS = { point, parent, relativePoint, xOfs, yOfs }
+    end);
+
     MsgFrame:Show()
 
     MsgFrame.Closer = CreateFrame("Button", nil, MsgFrame, "UIPanelButtonTemplate")
@@ -239,14 +281,17 @@ function G:MakeMessageWindow(message)
     end)
 
     MsgFrame.MessageContainer = MsgFrame:CreateFontString(nil, "OVERLAY")
-    MsgFrame.MessageContainer:SetPoint("LEFT", MsgFrame, "LEFT", 10, 0);
-    MsgFrame.MessageContainer:SetFontObject("Game13Font")
-    MsgFrame.MessageContainer:CanWordWrap()
+    MsgFrame.MessageContainer:SetPoint("TOPLEFT", MsgFrame, "TOPLEFT", 10, -5);
+    MsgFrame.MessageContainer:SetFontObject("Game15Font")
+    MsgFrame.MessageContainer:SetJustifyH("LEFT")
+    MsgFrame.MessageContainer:SetSpacing(3)
+    MsgFrame.MessageContainer:SetWordWrap(true)
     MsgFrame.MessageContainer:SetText(message)
 
-    
     previousWindow = MsgFrame
-    
-    return MsgFrame    
+
+    return MsgFrame
 end
+
+
 

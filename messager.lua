@@ -11,6 +11,7 @@ local Callback = LibStub("CallbackHandler-1.0")
 -- Character specific name save
 local playerName = UnitName("Player")
 
+-- my info saves player name to charater db so you dont spam yourself and add extra traffic
 GDDM_MY_INFO = {
     ME = playerName,
     TAR = "Unknown"
@@ -29,7 +30,7 @@ local f = CreateFrame("FRAME")
 f:RegisterEvent("ADDON_LOADED")
 f:RegisterEvent("CHAT_MSG_ADDON")
 f:SetScript("OnEvent", function(self, event, arg1, ...)
-    if event == "ADDON_LOADED" and arg1 == addonName then
+    if event == "ADDON_LOADED" and arg1 == addonName then -- This is where the loop starts
         G:RegisterComm(sendPrefix)
         
         GDDM_DB_OPTIONS.POS = GDDM_DB_OPTIONS.POS or {"CENTER",nil,"CENTER",0,0}
@@ -41,7 +42,10 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
             Verify_Target_In_List()
             return K
         end
-
+        
+        -- these are a bunch of checks to categorize responses
+        -- also gives me a way to disable levels of stupidity
+        -- enable/disable code was removed because I was mad while troubleshooting one day
         function Verify_Target_In_List()
 
             if IsNil(K) then -- stops the party if nothing is targetted
@@ -76,7 +80,7 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
     elseif event == "CHAT_MESSAGE_ADDON" then
         G.OnCommReceived()
     end
-end)
+end) -- loop ends
 
 
 
@@ -90,7 +94,7 @@ function G.OnCommReceived(_, prefix, message, _, sender)
     if prefix == sendPrefix and sender ~= GDDM_MY_INFO.ME then
         MakeMessageWindow(message)
     else
-        print(message)
+        print(message) -- change this to MakeMessageWindow(message) if you for trouble shooting in a wow client
     end
 end
 
@@ -239,16 +243,18 @@ function GetBasic()
 end
 
 ------------------------------------------------------------------------------
--- Message Box area
+-- Message Box
 ------------------------------------------------------------------------------
 local previousWindow
-
+-- I want the frame to time out after x seconds but reset on new message
+-- this function removes the previous message
 function MakeMessageWindow(message)
     if previousWindow then
         previousWindow:Hide()
         previousWindow = nil
     end
 
+    --message frames
     MsgFrame = CreateFrame("frame", "MessageFrame", UIParent, "InsetFrameTemplate3")
     MsgFrame:Hide()
     MsgFrame:SetSize(540, 60)
@@ -288,7 +294,7 @@ function MakeMessageWindow(message)
     MsgFrame.MessageContainer:SetWordWrap(true)
     MsgFrame.MessageContainer:SetText(message)
 
-    previousWindow = MsgFrame
+    previousWindow = MsgFrame 
 
     return MsgFrame
 end

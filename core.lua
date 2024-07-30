@@ -158,12 +158,6 @@ end)
 
 
 
-
-
-
-
-
-
 ------------------------------------------------------------------------------
 -- Script Functions
 ------------------------------------------------------------------------------
@@ -173,8 +167,6 @@ function C:Toggle()
     local menu = UI or C:CreateMenu();
     menu:SetShown(not menu:IsShown());
 end
-
-
 
 -- adds us to the special boy club so we can use escape
 table.insert(UISpecialFrames, "core")

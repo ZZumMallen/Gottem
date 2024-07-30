@@ -30,12 +30,12 @@ f:RegisterEvent("ADDON_LOADED")
 f:RegisterEvent("CHAT_MSG_ADDON")
 f:SetScript("OnEvent", function(self, event, arg1, ...)
     if event == "ADDON_LOADED" and arg1 == addonName then
+        G:RegisterComm(sendPrefix)
         
         GDDM_DB_OPTIONS.POS = GDDM_DB_OPTIONS.POS or {"CENTER",nil,"CENTER",0,0}
        
 
-        function InitVars()
-            G:RegisterComm(sendPrefix)            
+        function InitVars()       
             updateMessages()
             K = GDDM_MY_INFO.TAR
             Verify_Target_In_List()
@@ -88,9 +88,9 @@ end)
 -------------------------------------------------------------
 function G.OnCommReceived(_, prefix, message, _, sender)
     if prefix == sendPrefix and sender ~= GDDM_MY_INFO.ME then
-        print(message)
-    else
         MakeMessageWindow(message)
+    else
+        print(message)
     end
 end
 

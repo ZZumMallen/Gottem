@@ -1,20 +1,10 @@
----@diagnostic disable: undefined-field
-local addonName, core = ...;
+local _, core = ...;
 local L = core.A
 
-local h = CreateFrame("Frame")
-h:RegisterEvent("ADDON_LOADED")
 
-h:SetScript("OnEvent", function(self, event, arg1, ...) 
-    if event == "ADDON_LOADED" and arg1 == addonName then
-        L.tList = L.tList or {}
+--className, classFilename, classId = UnitClass("Player")
 
-    end
-end)
-
--- className, classFilename, classId = UnitClass("Player")
-
-L.ClassColorID = {
+local classColorID = {
     [1] = "warrior",
     [2] = "paladin",
     [3] = "hunter",
@@ -30,7 +20,7 @@ L.ClassColorID = {
     [13] = "evoker",
 }
 
-L.class_colors = {
+local class_colors = {
     ["Warrior"] = "C79C6E",
     ["Paladin"] = "F58CBA",
     ["Hunter"] = "ABD473",
@@ -47,7 +37,7 @@ L.class_colors = {
 }
 
 
-L.PartyList = {
+local PartyList = {
     [1] = "PLAYER",
     [2] = "PARTY1",
     [3] = "PARTY2",

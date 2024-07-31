@@ -56,20 +56,5 @@ L.PartyList = {
 }
 
 
-L.tList = {
-    "Marnival",
-    "Whomptilizer",
-    "Amelioration",
-    "Gusthebus",
-    "Chungtesta",
-    "Palmface",
-    "Sedition",
-    "Jakeofcats",
-    "lucilletwo",
-    "cryinggame",
-    "madys",
-    "manimal",
-    "Jacobcats",
-    "Brownnote",
- }
+L.tList = { }
 

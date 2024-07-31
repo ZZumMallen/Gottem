@@ -56,9 +56,9 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
                 return
             end
 
-            if InList(K) then
-                return
-            end
+            -- if InList(K) then
+            --     return
+            -- end
             
             if InGuild(K) then
                 return
@@ -185,10 +185,10 @@ function GetInfo(X)
     local myTarget = red .. GDDM_MY_INFO.TAR .. reset
     local tStamp = date("%I:%M%p - ")
 
-    local mapID = C_Map.GetBestMapForUnit(X)
+    local mapID = C_Map.GetBestMapForUnit("Target")
 
     ---@diagnostic disable-next-line
-    local pos = C_Map.GetPlayerMapPosition(mapID, X);
+    local pos = C_Map.GetPlayerMapPosition(mapID, "Target");
 
     if pos == nil then
         G.locX = 0
@@ -246,12 +246,18 @@ end
 -- Message Box
 ------------------------------------------------------------------------------
 local previousWindow
+local previousTimer
 -- I want the frame to time out after x seconds but reset on new message
 -- this function removes the previous message
 function MakeMessageWindow(message)
     if previousWindow then
         previousWindow:Hide()
         previousWindow = nil
+    end
+
+    if previousTimer then
+        previousTimer:Cancel()
+        previousTimer = nil
     end
 
     --message frames
@@ -294,7 +300,10 @@ function MakeMessageWindow(message)
     MsgFrame.MessageContainer:SetWordWrap(true)
     MsgFrame.MessageContainer:SetText(message)
 
-    previousWindow = MsgFrame 
+    previousWindow = MsgFrame
+    previousTimer = C_Timer.NewTimer(5,function (self)
+        MsgFrame:Hide()        
+    end)
 
     return MsgFrame
 end

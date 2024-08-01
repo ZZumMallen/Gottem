@@ -153,7 +153,7 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
         CBX_DEBUG_LABEL = C:CreateCheckBoxLabel(UI.CBX_Debug_Label, "Debug", CBX_DEBUG) -- attachesd to box on previous line
 
     end
-end)
+end) 
 
 
 

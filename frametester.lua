@@ -47,10 +47,10 @@ local UI = CreateFrame("Frame", "SaveLoc", UIParent, "BasicFrameTemplateWithInse
         GDDM_MY_INFO.POS = { xOfs, yOfs }
     end)
 end
+ 
 
 
-
-
+ 
 
 function CreatePanelButton(pte,rPte,x,y,w,h,text)
     UI.Btn = CreateFrame("BUTTON", nil, UI, "UIPanelButtonTemplate")

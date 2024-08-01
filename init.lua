@@ -1,6 +1,6 @@
 local addonName, core = ...
 _G["zGottem"] = core
-core.A = {}
+core.A = {} 
 
 GDDM_DB_OPTIONS = GDDM_DB_OPTIONS or {}
 GDDM_DB_OPTIONS.INIT = GDDM_DB_OPTIONS.INIT or {}
@@ -15,4 +15,4 @@ GDDM_DB_MSG.History = GDDM_DB_MSG.History or {}
 GDDM_MY_INFO = GDDM_MY_INFO or {}
 
 
-
+ 

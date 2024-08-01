@@ -30,6 +30,6 @@ Second I like to make dumb stuff to make my friends laugh so I have included a r
 - Save Output in readable fomat - python(shittylua lib)
   * ultimate goal is to store all output in googlesheets
 - Store tracked data as ID not name
-
+ 
 
 

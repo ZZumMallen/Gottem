@@ -4,6 +4,6 @@
     <Script file="Libs\AceComm-3.0\ChatThrottleLib.lua"/>
     <Script file="Libs\AceSerializer-3.0\AceSerializer-3.0.lua"/>
     <Script file="Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
-    <Script file="Libs\AceComm-3.0\AceComm-3.0.lua"/>    
+    <Script file="Libs\AceComm-3.0\AceComm-3.0.lua"/>     
 </Ui>
 

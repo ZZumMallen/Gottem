@@ -3,21 +3,22 @@ local G = core.A
 
 local sendPrefix = "ope_gottem"
 
--- Character specific name save
+-- Character specific name save2
 local playerName = UnitName("Player")
 
+LibStub("AceComm-3.0"):Embed(G) ---@diagnostic disable-line
 
----@diagnostic disable:undefined-field
-LibStub("AceComm-3.0"):Embed(G)
-local Callback = LibStub("CallbackHandler-1.0")
+G.callbacks = G.callbacks or
+    LibStub("CallbackHandler-1.0"):New(G)
+
 
 -- slash command
 SLASH_GOTTEM1 = "/gottem"
-SlashCmdList["GOTTEM"] = function()
+SlashCmdList["GOTTEM"] = function() 
     InitVars()
 end;
 
--- my info saves player name to charater db so you dont spam yourself and add extra traffic
+-- my info saves player name to charater db so you dont spam yourself and add extra traffic 
 GDDM_MY_INFO = {
     ME = playerName,
     TAR = "Unknown"
@@ -27,7 +28,7 @@ GDDM_MY_INFO = {
 local function InInstance()
     local isInInstance, _ = IsInInstance()
     if isInInstance then
-        return true        
+        return true
     else
         return false
     end
@@ -67,7 +68,7 @@ local function IsPlayerCharacter()
 end
 
 local function IsNPC()
-    if not IsPlayerCharacter and UnitCreatureFamily("Target") == nil then
+    if UnitCreatureFamily("Target") == nil then
         GetBasic()
         G:SendCommMessage(sendPrefix, NPCMsg, "Guild")
         return true
@@ -87,6 +88,11 @@ local function IsAnimal()
     end
 end
 
+local function InCombat()
+    if UnitAffectingCombat("Player") then
+        return true
+    end
+end
 
 
 local f = CreateFrame("FRAME")
@@ -101,7 +107,7 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
 
         function InitVars()
             -- checks if you are in an instance
-            
+
             if addon_loaded then
                 -- adds player name to the per character db
                 updateMessages()
@@ -118,6 +124,10 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
                 return
             end
 
+            if InCombat() then
+                return
+            end
+
             -- stops the message func if not targetting anything
             if IsNil(K) then
                 return
@@ -126,7 +136,6 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
             if InGuild(K) then
                 return
             end
-
 
             if IsPlayerCharacter() then
                 return
@@ -144,7 +153,7 @@ f:SetScript("OnEvent", function(self, event, arg1, ...)
     elseif event == "CHAT_MESSAGE_ADDON" then
         G.OnCommReceived()
     end
-end) 
+end)
 
 
 -------------------------------------------------------------
@@ -154,7 +163,8 @@ function G.OnCommReceived(_, prefix, message, _, sender)
     if prefix == sendPrefix and sender ~= GDDM_MY_INFO.ME then
         MakeMessageWindow(message)
     else
-        print(message) -- change this to MakeMessageWindow(message) if you for trouble shooting in a wow client
+        MakeMessageWindow(message) -- troubleshooting
+        --print(message) -- deployment
     end
 end
 
@@ -168,6 +178,7 @@ function GetInfo()
     local playerMe = green .. GDDM_MY_INFO.ME .. reset
     local myTarget = red .. GDDM_MY_INFO.TAR .. reset
     local tStamp = date("%I:%M%p - ")
+    local locName, locX, locY
 
     local mapID = C_Map.GetBestMapForUnit("Target")
 
@@ -175,26 +186,26 @@ function GetInfo()
     local pos = C_Map.GetPlayerMapPosition(mapID, "Target");
 
     if pos == nil then
-        G.locX = 0
-        G.locY = 0
+        locX = 0
+        locY = 0
         return
     else
-        G.locX = math.ceil(pos.x * 10000) / 100
-        G.locY = math.ceil(pos.y * 10000) / 100
+        locX = math.ceil(pos.x * 10000) / 100
+        locY = math.ceil(pos.y * 10000) / 100
     end
 
     if GetZoneText() == GetMinimapZoneText() then
-        G.locName = GetZoneText()
+        locName = GetZoneText()
     else
-        G.locName = GetMinimapZoneText() .. ", " .. GetZoneText()
+        locName = GetMinimapZoneText() .. ", " .. GetZoneText()
     end
 
     ---@type string
     GuildMsg = tStamp .. playerMe.. " spotted " .. myTarget .."\n" ..
-        "Found at " .. G.locX .. ", " .. G.locY .. " in " .. G.locName
+        "Found at " .. locX .. ", " .. locY .. " in " .. locName
 
     ListMsg = tStamp .. playerMe .. " spotted " .. myTarget .. "\n" ..
-        "Found at " .. G.locX .. ", " .. G.locY .. " in " .. G.locName
+        "Found at " .. locX .. ", " .. locY .. " in " .. locName
     return red, green, reset, playerMe, myTarget
 end
 
@@ -246,6 +257,8 @@ function MakeMessageWindow(message)
         previousTimer:Cancel()
         previousTimer = nil
     end
+    
+    PlaySoundFile("Interface\\AddOns\\zGottem\\Media\\moleman_fidget_5140242.ogg")
 
     --message frames
     MsgFrame = CreateFrame("frame", "MessageFrame", UIParent, "InsetFrameTemplate3")
@@ -264,6 +277,8 @@ function MakeMessageWindow(message)
     end);
 
     MsgFrame:Show()
+    
+    
 
     -- Creates the close button
     MsgFrame.Closer = CreateFrame("Button", nil, MsgFrame, "UIPanelButtonTemplate")

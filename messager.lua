@@ -163,8 +163,8 @@ function G.OnCommReceived(_, prefix, message, _, sender)
     if prefix == sendPrefix and sender ~= GDDM_MY_INFO.ME then
         MakeMessageWindow(message)
     else
-        MakeMessageWindow(message) -- troubleshooting
-        --print(message) -- deployment
+        --MakeMessageWindow(message) -- troubleshooting
+        print(message) -- deployment
     end
 end
 
@@ -257,7 +257,7 @@ function MakeMessageWindow(message)
         previousTimer:Cancel()
         previousTimer = nil
     end
-    
+
     PlaySoundFile("Interface\\AddOns\\zGottem\\Media\\moleman_fidget_5140242.ogg")
 
     --message frames

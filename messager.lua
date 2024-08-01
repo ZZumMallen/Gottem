@@ -14,11 +14,11 @@ G.callbacks = G.callbacks or
 
 -- slash command
 SLASH_GOTTEM1 = "/gottem"
-SlashCmdList["GOTTEM"] = function() 
+SlashCmdList["GOTTEM"] = function()
     InitVars()
 end;
 
--- my info saves player name to charater db so you dont spam yourself and add extra traffic 
+-- my info saves player name to charater db so you dont spam yourself and add extra traffic
 GDDM_MY_INFO = {
     ME = playerName,
     TAR = "Unknown"
@@ -94,14 +94,12 @@ local function InCombat()
     end
 end
 
-
 local f = CreateFrame("FRAME")
 f:RegisterEvent("ADDON_LOADED")
 f:RegisterEvent("CHAT_MSG_ADDON")
 f:SetScript("OnEvent", function(self, event, arg1, ...)
     if event == "ADDON_LOADED" and arg1 == addonName then -- This is where the loop starts
         G:RegisterComm(sendPrefix)
-        GDDM_DB_OPTIONS.POS = GDDM_DB_OPTIONS.POS or {"CENTER",nil,"CENTER",0,0}
         local addon_loaded = true
         f:UnregisterEvent("ADDON_LOADED")
 
@@ -277,8 +275,8 @@ function MakeMessageWindow(message)
     end);
 
     MsgFrame:Show()
-    
-    
+
+
 
     -- Creates the close button
     MsgFrame.Closer = CreateFrame("Button", nil, MsgFrame, "UIPanelButtonTemplate")

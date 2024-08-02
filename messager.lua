@@ -161,8 +161,8 @@ function G.OnCommReceived(_, prefix, message, _, sender)
     if prefix == sendPrefix and sender ~= GDDM_MY_INFO.ME then
         MakeMessageWindow(message)
     else
-        --MakeMessageWindow(message) -- troubleshooting
-        print(message) -- deployment
+        MakeMessageWindow(message) -- troubleshooting
+        --print(message) -- deployment
     end
 end
 

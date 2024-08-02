@@ -3,7 +3,7 @@ local L = core.A
 
 
 --className, classFilename, classId = UnitClass("Player")
-
+-- ignore
 local classColorID = {
     [1] = "warrior",
     [2] = "paladin",

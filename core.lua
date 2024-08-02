@@ -3,7 +3,6 @@
 
 local addonName, core = ...;
 local C = core.A;
-local file = core
 
 ------------------------------------------------------------------------------
 -- Slash Commands

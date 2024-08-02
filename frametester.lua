@@ -7,13 +7,8 @@ GDDM_MY_INFO = GDDM_MY_INFO or {}
 GDDM_MY_INFO.POS = GDDM_MY_INFO.POS or {}
 GDDM_MY_INFO.POS = {}
 
-
-
-
-
 SLASH_TEST1 = "/zest"
 SlashCmdList["zest"] = function() print("test") end;
-
 
 GameMenuFrame:SetScale(0.6)
 MinimapCluster:SetScale(0.75)

@@ -193,7 +193,8 @@
         "UNITNAME_TITLE_PET",
         "UNITNAME_TITLE_MINION",
         "MinimapCluster",
-        "SetUIPanelAttribute"
+        "SetUIPanelAttribute",
+        "COMBAT"
     ],
     "editor.inlineSuggest.enabled": false
 

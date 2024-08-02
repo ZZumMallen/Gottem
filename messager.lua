@@ -18,6 +18,7 @@ SlashCmdList["GOTTEM"] = function()
     InitVars()
 end;
 
+
 -- my info saves player name to charater db so you dont spam yourself and add extra traffic
 GDDM_MY_INFO = {
     ME = playerName,
@@ -49,7 +50,7 @@ end
 local function InGuild(X)
     local guildName, _, _ = GetGuildInfo(X)
     if guildName == "Peons" then
-        GetInfo(X)
+        GetInfo()
         G:SendCommMessage(sendPrefix, GuildMsg, "Guild")
         return true
     else
